@@ -1,0 +1,53 @@
+<div class="overlay"></div>
+<div class="sideNav">
+  <app-aside-nav #chaild>
+   
+  </app-aside-nav>
+  <!-- <app-frsm-aside-nav></app-frsm-aside-nav> -->
+
+  <!-- <app-aside-nav *ngIf="sideNavBarType =='vms'"></app-aside-nav>
+  <app-frsm-aside-nav *ngIf="sideNavBarType =='frsm'"></app-frsm-aside-nav> -->
+
+</div>
+<div class="side-container">
+  <div class="navbar navbar-expand-md navbar-dark bg-prime">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="chaild.ShowsidebarMobNew()" class="hamburger_menu">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+
+    
+    <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+      <ul class="navbar-nav d-flex nav-right1">
+
+
+
+        <div class="dropdown user-dropdown dropright">
+          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+
+            <div class="user-icon">
+             {{currentUser?.roleName}}
+              <span class="rounded-circle profile-circle">
+                <img
+                  [src]="currentUser?.profilePicture ? currentUser?.profilePicture : 'https://ebcblob.blob.core.windows.net/ebc/DefaultUser.png'"
+                  alt="" />
+              </span>
+           
+            </div>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <!-- <li><a class="dropdown-item" href="">{{'COMMON.USER_NAME'|translate}}</a></li>
+            <li><a class="dropdown-item" href="">{{'COMMON.EDIT_PROFILE'|translate}}</a></li> -->
+            <li><a class="dropdown-item" href="" routerLink="/profile">{{'COMMON.SETTINGS'|translate}}</a></li>
+          </ul>
+        </div>
+        <button mat-flat-button class="btn-blue" (click)="onLogOut()">Logout</button>
+      </ul>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+  <div class="copyright-footer">
+    <h5>{{'COMMON.COPYRIGHT'|translate}}</h5>
+  </div>
+</div>
+
+

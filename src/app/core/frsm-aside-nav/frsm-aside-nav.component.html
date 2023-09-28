@@ -1,0 +1,153 @@
+
+<mat-card class="side-navbar active-nav" id="sidebar" [class.full]="sidenavshow" [class.half]="!sidenavshow">
+
+  <div class="d-flex justify-content-between">
+    <div class="nav-logo" [class.w-0]="!sidenavshow">
+      <img src="assets/images/logo.png" routerLink="/report">
+    </div>
+    <div class="">
+      <button class="btn_toggle mob" (click)="ShowsidebarMob()">
+        <mat-icon [class.icon_rotate]="!sidenavshow">keyboard_double_arrow_left</mat-icon>
+      </button>
+     <!--   <button class="btn_toggle" (click)="toggleShowsidebar()">
+       <mat-icon [class.icon_rotate]="!sidenavshow">keyboard_double_arrow_left</mat-icon>
+      </button> -->
+      <nav class="navbar navbar-dark"(click)="toggleShowsidebar()" >
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+          <!-- <span class="navbar-toggler-icon"></span> -->
+          <mat-icon>menu</mat-icon>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+
+  <div class="ul_wrap">
+    <ul class="">
+
+      <div class="nav-link">
+        <li routerLink="/frsm-account" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <mat-icon> account_box </mat-icon>
+          <span class="mx-2" [class.none]="!sidenavshow">Account Management</span>
+        </li>
+      </div>
+
+      <div class="nav-link">
+        <li routerLink="/frsm-building" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <mat-icon> domain </mat-icon>
+          <span class="mx-2" [class.none]="!sidenavshow">Building Management</span>
+        </li>
+      </div>
+
+      <div class="nav-link">
+        <li routerLink="/frsm-floor" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <i class="fa fa-level-up" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">Floor Management</span>
+        </li>
+      </div>
+
+      <div class="nav-link">
+        <li routerLink="/frsm-door" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <i class="fa fa-columns" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">Door Management</span>
+        </li>
+      </div>
+
+      <div class="nav-link">
+        <li routerLink="/frsm-company" routerLinkActive="active" (click)="ShowsidebarMob()">
+            <i class="fa fa-area-chart" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">Company Management</span>
+        </li>
+      </div>
+
+      <div class="nav-link">
+        <li routerLink="/frsm-io-trigger" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <mat-icon> line_weight </mat-icon>
+          <span class="mx-2" [class.none]="!sidenavshow">I/O Trigger Management</span>
+        </li>
+      </div>
+
+
+      <div class="nav-link">
+        <li (click)="toggleSetup()" routerLinkActive="active">
+          <i class="fa fa-cog" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">Settings</span>
+          <mat-icon *ngIf="!isSetup" >keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="isSetup">keyboard_arrow_up</mat-icon>
+        </li>
+      </div>
+
+      <ng-container *ngIf="isSetup">
+        <div  class="nav-link sublink">
+          <li    [routerLink]="['settings']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-building" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">ACS Server</span>
+          </li>
+        </div>
+
+        <div  class="nav-link sublink">
+          <li  [routerLink]="['settings/io-box']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-object-group" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">I/O Box</span>
+          </li>
+        </div>
+
+        <div  class="nav-link sublink">
+          <li [routerLink]="['settings/qr-code-reader']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-qrcode" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">Q/R Code Recoder</span>
+          </li>
+        </div>
+
+        <div  class="nav-link sublink">
+          <li [routerLink]="['settings/smtp']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <mat-icon>storage</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">SMTP</span>
+          </li>
+        </div>
+
+        <div  class="nav-link sublink">
+          <li  [routerLink]="['settings/vms']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <mat-icon>storage</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">VMS</span>
+          </li>
+        </div>
+
+        <div  class="nav-link sublink">
+          <li [routerLink]="['settings/frs']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <mat-icon>storage</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">FRS</span>
+          </li>
+        </div>
+
+        <div  class="nav-link sublink">
+          <li [routerLink]="['settings/email-notification']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <mat-icon>inbox</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">Email Notification</span>
+          </li>
+        </div>
+
+        <div  class="nav-link sublink">
+          <li [routerLink]="['settings/license']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-cog" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">License</span>
+          </li>
+        </div>
+      </ng-container>
+
+      <div class="nav-link">
+        <li [routerLink]="['frsm-investigation']" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <mat-icon>flag</mat-icon>
+          <span class="mx-2" [class.none]="!sidenavshow">Investigation</span>
+        </li>
+      </div>
+
+      <div class="nav-link">
+        <li [routerLink]="['frsm-logs']" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <i class="fa fa-clipboard" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">Logs</span>
+        </li>
+      </div>
+    </ul>
+  </div>
+</mat-card>

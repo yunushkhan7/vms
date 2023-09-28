@@ -1,0 +1,82 @@
+<section class="side_container">
+  <div class="container-fluid">
+    <div class="main-page">
+      <div class="main-div padding-x">
+        <div class="d-flex justify-content-between">
+        </div>
+        <div class="d-flex justify-content-between">
+        </div>
+        <form [formGroup]="addForm" class="pt-1 row justify-content-between">
+          <hr />
+          <!-- buildingName -->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label">Building Name</label>
+            <div class="inpu-t">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select
+                  placeholder="Building Name"
+                  [formControl]="addForm.controls['buildingName']"
+                >
+                  <mat-option
+                    *ngFor="let building of buildNameList"
+                    [value]="building?.buildingName"
+                    (click)="selectBuilding(building)"
+                  >
+                    {{ building?.buildingName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['buildingName'].errors">Building Name
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+            </div>
+          </div>
+          <!-- floorName -->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label">Floor Name</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput maxlength="50"
+                  [formControl]="addForm.controls['floorName']"
+                  placeholder="Floor Name"
+                />
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['floorName'].errors">Floor Name
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+              <mat-error *ngIf="addForm.get('floorName')?.errors?.pattern">
+                Invalid Input Data
+              </mat-error>
+            </div>
+          </div>
+          <!-- floorNo -->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label">Floor Number</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  onlyNumbers
+                  maxlength="3"  (keydown.space)="$event.preventDefault();"
+                  max="100" (paste)="$event.preventDefault()"
+                  [formControl]="addForm.controls['floorNo']"
+                  placeholder="Floor Number"
+                />
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['floorNo'].errors">Floor Number
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+            </div>
+          </div>
+
+
+        </form>
+        <div class="d-flex justify-content-end margin-y">           
+          <button class="btn-black2" type="button" mat-flat-button (click)="back()">{{'COMMON.BACK' | translate}}</button>
+          <button class="btn-blue" type="submit" [disabled]="!addForm.dirty" mat-flat-button (click)="submitForm()">{{"COMMON.SUBMIT" | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,82 @@
+<div class="main-page">
+
+    <div class="bread-crumb">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">Door Management</a></li>
+            </ol>
+        </nav>
+    </div>
+
+
+                         
+    <mat-expansion-panel [expanded]="1" (opened)="panelOpenState = true" (closed)="panelOpenState = false" hideToggle>
+        <mat-expansion-panel-header  #panelH1 (click)="panelH1._toggle()">
+            <mat-panel-title class="d-flex justify-content-between align-items-center">
+                <h5>Door List</h5>
+
+                <div class="head-icons">
+                    <a [routerLink]="['door-management/add']" matTooltip="Add Door"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                </div>
+
+            </mat-panel-title>
+            <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState" (click)="panelH1._toggle()">expand_more
+            </mat-icon>
+            <mat-icon matTooltip="expand_less" *ngIf="panelOpenState" (click)="panelH1._toggle()">expand_less
+            </mat-icon>
+        </mat-expansion-panel-header>
+        <section>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ "DOORMANAGEMENT.NO" | translate }}</th>
+                            <th (click)="sortData('DoorName')" scope="col">{{ "DOORMANAGEMENT.DOORNAME" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+                            <th (click)="sortData('Range')" scope="col">{{ "DOORMANAGEMENT.RANGE" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+                            <th (click)="sortData('BuildingName')" scope="col">{{ "COMPANY.TH_BUILDING_PERSON" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+                            <th (click)="sortData('FloorName')" scope="col">{{ "DOORMANAGEMENT.FLOORNAME" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+                            <!-- <th (click)="sortData('CompanyName')" scope="col">{{ "DOORMANAGEMENT.CNAME" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th> -->
+                            <th (click)="sortData('EndPointsIn')" scope="col">{{ "DOORMANAGEMENT.ENIN" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+                            <th (click)="sortData('EndPointsOut')" scope="col">{{ "DOORMANAGEMENT.ENOUT" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="doorManagementList">
+                      <tr *ngFor="let door of doorManagementList; let i=index">
+                            <td>{{columnNumberPrefix + i+1}}</td>
+                            <td>{{(door?.doorName) ? (door?.doorName) : 'N.A'}}</td>
+                            <td>{{(door?.range) ? (door?.range) : 'N.A'}}</td>
+                            <td>{{(door?.buildingName) ? (door?.buildingName) : 'N.A'}}</td>
+                            <td *ngFor="let floor of door?.floor">
+                                <!-- {{ company?.floorName }} -->
+                                {{ floor?.name }}
+                                <!-- <ul>
+                                  <li *ngFor="let floor of door?.floor">
+                                    {{ floor?.name }}
+                                  </li>
+                                </ul> -->
+                              </td>
+                            <!-- <td>&#9679; {{(door?.companyName) ? (door?.companyName) : 'N.A'}}</td> -->
+                            <td>&#9679; {{(door?.endPointsIn) ? (door?.endPointsIn) : 'N.A'}}</td>
+                            <td>&#9679; {{(door?.endPointsOut) ? (door?.endPointsOut) : 'N.A'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <ng-container *ngIf="doorManagementList?.length">
+            <pagination [paginationList]="pagination" [selectedPageLimit]="currentPageLimit" [currentPage]="currentPage"
+            (onPageChange)="getPage($event)"
+            [from]="columnNumberPrefix+1"
+              [to]="doorManagementList?.length+columnNumberPrefix"
+              [recordCount]="recordCount"
+              [lastPage]="lastpage"
+            >
+          </pagination>
+          </ng-container>
+          <ng-container *ngIf="!doorManagementList?.length">
+            <p>{{'PAGINATIONTEXT.NOTFOUND' | translate}} </p>
+          </ng-container>
+    </mat-expansion-panel>
+
+    </div>

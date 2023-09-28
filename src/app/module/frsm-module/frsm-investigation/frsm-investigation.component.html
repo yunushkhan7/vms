@@ -1,0 +1,142 @@
+<div class="main-page">
+
+  <div class="bread-crumb">
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/Setup"> Investigation </a></li>
+          </ol>
+      </nav>
+  </div>
+
+
+
+  <mat-expansion-panel [expanded]="1" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+          <mat-panel-title class="d-flex justify-content-between align-items-center">
+              <h5>Filter</h5>
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+      <section>
+        <form [formGroup]="investigationForm">
+        <div class="form-group">
+
+          <div class="row mt-3">
+              <div class="col-md-6">
+                <label> <em>*</em> Start Date</label>
+                <div class="class">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput [matDatepicker]="picker" formControlName="startDate" placeholder="Sunday, May 1, 2022">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label> <em>*</em> End Date</label>
+                <div class="class">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput [matDatepicker]="picker1" formControlName="endDate" placeholder="Sunday, May 1, 2022">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label> Role</label>
+              <div class="class">
+                  <mat-form-field appearance="outline" class="w-100">
+                      <mat-select placeholder="Please Select" formControlName="role">
+                        <mat-option value="Marriage">Marriage</mat-option>
+                        <mat-option value="Office Meeting">Office Meeting</mat-option>
+                        <mat-option value="Politics Meeting">Politics Meeting</mat-option>
+                        <mat-option value="Family Gathering">Family Gathering</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label> Type</label>
+               <div class="class">
+                  <mat-form-field appearance="outline" class="w-100">
+                      <mat-select placeholder="Please Select" formControlName="type">
+                        <mat-option value="Marriage">Marriage</mat-option>
+                        <mat-option value="Office Meeting">Office Meeting</mat-option>
+                        <mat-option value="Politics Meeting">Politics Meeting</mat-option>
+                        <mat-option value="Family Gathering">Family Gathering</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label> Company</label>
+              <mat-form-field appearance="outline" class="w-100" >
+                  <mat-select placeholder="Please Select" formControlName="company">
+                    <mat-option value="Marriage">Marriage</mat-option>
+                    <mat-option value="Office Meeting">Office Meeting</mat-option>
+                    <mat-option value="Politics Meeting">Politics Meeting</mat-option>
+                    <mat-option value="Family Gathering">Family Gathering</mat-option>
+                  </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <label> Building</label>
+              <mat-form-field appearance="outline" class="w-100" >
+                  <mat-select placeholder="Please Select" formControlName="building">
+                    <mat-option value="Marriage">Marriage</mat-option>
+                    <mat-option value="Office Meeting">Office Meeting</mat-option>
+                    <mat-option value="Politics Meeting">Politics Meeting</mat-option>
+                    <mat-option value="Family Gathering">Family Gathering</mat-option>
+                  </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+      </div>
+    </form>
+      </section>
+
+      <div class="exp-footer exp-footer-bg">
+          <div class="d-flex justify-content-end align-items-end">
+              <button mat-flat-button class="btn-blue" (click)="submit()">Submit</button>
+              <button mat-button (click)="reset()">Reset</button>
+          </div>
+      </div>
+
+  </mat-expansion-panel>
+
+
+
+
+
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title class="d-flex justify-content-between align-items-center">
+            <h5>Investigation</h5>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <section>
+      section
+    </section>
+
+    <div class="exp-footer exp-footer-bg">
+        <div class="d-flex justify-content-end align-items-end">
+            <button mat-flat-button class="btn-blue">Submit</button>
+            <button mat-button>Reset</button>
+        </div>
+    </div>
+
+</mat-expansion-panel>
+
+
+</div>
+
+
+
+

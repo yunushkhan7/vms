@@ -1,0 +1,47 @@
+<div class="delet-popup text-center">
+  <!-- Delete -->
+  <ng-container *ngIf="data?.isDelete">
+    <img src="assets/images/delete-icon.svg">
+    <h3>Are you sure you want to delete {{(data?.buildingName) ? data?.buildingName : data?.deletedData}} ?</h3>
+    <div class="text-center">
+      <button (click)="onDelete()" class="blue-btn">Delete</button>
+      <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Cancel</button>
+    </div>
+  </ng-container>
+
+  <!-- Is-Success Popup -->
+  <ng-container *ngIf="data?.isSuccess">
+    <img class="d-img" src="assets/images/successIcon.png">
+    <h3>Successfully Deleted</h3>
+    <div class="text-center successfully-w">
+      <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>OK</button>
+    </div>
+  </ng-container>
+
+   <!-- Is-UnSuccess Popup -->
+   <ng-container *ngIf="data?.message=='error'">
+    <h3>{{data?.message}}</h3>
+    <div class="text-center">
+      <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>OK</button>
+    </div>
+  </ng-container>
+  <!-- Suspend -->
+  <ng-container *ngIf="data?.isSuspend">
+    <img src="assets/images/errorIcon.png">
+    <h3>Are you sure you want to {{data?.suspendFlag ? 'suspend' : 'activate'}} <br>{{data?.name}} ?</h3>
+    <div class="text-center">
+      <button (click)="onDelete()" class="blue-btn">Yes</button>
+      <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Cancel</button>
+    </div>
+  </ng-container>
+
+    <!-- isSessionTimeOut -->
+    <ng-container *ngIf="data?.isSessionTimeOut" class="session">
+      <img src="assets/images/timer-out.png">
+      <h3>{{"ACTIONPOPUP.SESSIONPOPUP" | translate}} </h3>
+      <div class="text-center">
+        <button (click)="closed()" mat-dialog-close class="blue-btn">OK</button>
+      </div>
+    </ng-container>
+    
+</div>

@@ -1,0 +1,126 @@
+   <div class="main-page">
+
+      <div class="bread-crumb">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Settings</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">FRS</a></li>
+            </ol>
+        </nav>
+    </div>
+
+      <div class="main-div">
+
+        <mat-expansion-panel [expanded]="1" (opened)="setStep2(0)" (closed)="panelOpenState2 = false" hideToggle>
+          <mat-expansion-panel-header #panelH2 (click)="panelH2._toggle()">
+            <mat-panel-title class="d-flex justify-content-between align-items-center">
+              <h5>{{"TH_FRSM.FRS" | translate }}</h5>
+            </mat-panel-title>
+
+            <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState2" (click)="panelH2._toggle()">expand_more
+            </mat-icon>
+            <mat-icon matTooltip="expand_less" *ngIf="panelOpenState2" (click)="panelH2._toggle()">expand_less
+            </mat-icon>
+          </mat-expansion-panel-header>
+            <div class="padding-main">
+
+        <form [formGroup]="addForm">
+          <div  class="panel-p row justify-content-between">
+            <!-- account -->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label"><em>*</em> Account</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput [formControl]="addForm.controls['account']" 
+                (keypress)="space($event)" placeholder="Account" />
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['account'].errors">Account 
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+            </div>
+          </div>
+
+          <!--password-->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label"><em>*</em> Password</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput type="password" [formControl]="addForm.controls['password']" 
+                placeholder="Password" [type]="hide ? 'password' : 'text'" (keypress)="space($event)"/>
+                <a class="eye-icon" (click)="hide = !hide"><mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon></a>
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['password'].errors">Password 
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+            </div>
+          </div>
+
+          <!-- ip-->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label"><em>*</em> IP</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput [formControl]="addForm.controls['ip']" 
+                (keypress)="space($event)" placeholder="IP"  (paste)="$event.preventDefault()"
+                
+                />
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['ip'].errors">IP 
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+              <!-- <mat-error *ngIf="addForm.controls['ip'].hasError('required')">IP 
+                Invalid Ip address entered.
+              </mat-error> -->
+            </div>
+          </div>
+
+          <!-- port-->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label"><em>*</em> Port</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput [formControl]="addForm.controls['port']" 
+                (keypress)="space($event)" placeholder="Port"  [maxlength]="15" (paste)="$event.preventDefault()"
+                onkeypress="return String.fromCharCode(event.charCode).match(/[^0-9]/g) === null"/>
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['port'].errors">Port 
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+            </div>
+          </div>
+
+          <!-- portocol-->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label"><em>*</em> Protocol</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <!-- <input matInput [formControl]="addForm.controls['portocol']" (paste)="$event.preventDefault()"
+                appInputRestriction placeholder="Protocol"  [maxlength]="15"
+                onkeypress="return String.fromCharCode(event.charCode).match(/[^0-9]/g) === null"/> -->
+                <mat-select placeholder="Select protocol HTTPS | HTTPS" 
+                [formControl]="addForm.controls['portocol']">
+                   <mat-option value="http">{{'FRSMANAGER_SETTINGS.HTTP' | translate}}  </mat-option>
+                   <mat-option value="https">{{'FRSMANAGER_SETTINGS.HTTPS' | translate}}  </mat-option>
+               </mat-select>
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['portocol'].errors">Protocol 
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+            </div>
+          </div>
+          </div>
+
+
+        </form>
+        <div class="exp-footer exp-footer-bg">
+          <div></div>
+        <div class="d-flex justify-content-end">
+          <button class="btn-blue" type="submit" mat-flat-button [disabled]="!addForm.dirty" (click)="submitForm()">{{'COMMON.SUBMIT' | translate}}</button>
+          <button class="w-button" type="button" mat-flat-button (click)="reset()">{{"OTHERS.RESET_BUTTON" | translate }}  </button>
+        </div>
+        </div>
+        </div>
+        </mat-expansion-panel>
+      </div>
+    </div>
+

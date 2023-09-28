@@ -1,0 +1,66 @@
+<div class="main-page">
+
+  <div class="bread-crumb">
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Settings</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">SMTP</a></li>
+          </ol>
+      </nav>
+  </div>
+
+
+
+  <mat-expansion-panel [expanded]="1" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+          <mat-panel-title class="d-flex justify-content-between align-items-center">
+            <h5>SMTP Settings</h5>
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+      <section>
+        <form [formGroup]="frsmSMTPForm">
+          <div class="form-group">
+            <label for="exampleInputEmail1">* Mail Server Enable</label><br />
+            <mat-slide-toggle></mat-slide-toggle>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">* Host</label>
+            <input type="name" class="form-control" id="" formControlName="host" placeholder="Host">
+          </div>
+
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">* Port Number</label>
+            <input type="name" class="form-control" id="" formControlName="portNumber" placeholder="port-1, 565625">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">* Email</label>
+            <input type="email" class="form-control" id="" formControlName="email" placeholder="">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">* Password</label>
+            <input type="password" class="form-control" id="" formControlName="password" placeholder="">
+          </div>
+
+        </form>
+      </section>
+
+      <div class="exp-footer exp-footer-bg">
+          <div class="d-flex justify-content-end align-items-end">
+              <button mat-flat-button class="btn-black">Test</button>
+              <button mat-flat-button class="btn-blue" (click)="submit()">Submit</button>
+              <button mat-button>Reset</button>
+          </div>
+      </div>
+
+  </mat-expansion-panel>
+
+
+</div>
+
+
+
+

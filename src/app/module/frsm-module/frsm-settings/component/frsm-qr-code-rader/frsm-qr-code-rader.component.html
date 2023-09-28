@@ -1,0 +1,87 @@
+<div class="main-page">
+
+  <div class="bread-crumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Setup"> Settings </a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a routerLink="/sell"> QR Code Reader</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- <p align="right">
+    <button type="button" [routerLink]="['add']" class="btn btn-secondary">+ Add</button>
+  </p> -->
+
+  <mat-expansion-panel [expanded]="1" (opened)="setStep(0)" (closed)="panelOpenState = false" hideToggle>
+    <mat-expansion-panel-header #panelH (click)="panelH._toggle()">
+      <mat-panel-title class="d-flex justify-content-between align-items-center">
+        <h5>QR Code Reader List</h5>
+
+        <div class="head-icons">
+          <!-- <a (click)="DownloadExcel()"><i class="fa fa-file-text-o icon-color"></i></a> -->
+          <a (click)="DownloadExcel()" matTooltip="Excel download"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+          <!-- <a href="#"><i class="fa fa-pencil icon-color" aria-hidden="true"></i></a>
+          <a href="#"><i class="fa fa-trash icon-color" aria-hidden="true"></i></a>
+          <span class="icon-color"> | </span> -->
+          <a [routerLink]="['add']" matTooltip="Add QR Code Reader"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        </div>
+      </mat-panel-title>
+      <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState" (click)="panelH._toggle()">expand_more
+      </mat-icon>
+      <mat-icon matTooltip="expand_less" *ngIf="panelOpenState" (click)="panelH._toggle()">expand_less
+      </mat-icon>
+    </mat-expansion-panel-header>
+    <section>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>{{"QRCODE.NO" | translate}}</th>
+              <th (click)="sortData('Name')">{{"QRCODE.NAME" | translate}} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <!-- <th>{{"QRCODE.FLOOR" | translate}} <i class="fa fa-sort" aria-hidden="true"></i></th> -->
+              <th (click)="sortData('Ip')">{{"QRCODE.IP" | translate}} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th (click)="sortData('Port')">{{"QRCODE.PORT" | translate}} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th>{{"QRCODE.ACTION" | translate}}</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="QRCodeReaderList">
+            <tr *ngFor="let QRCodeReader of QRCodeReaderList; let i=index">
+              <td>{{columnNumberPrefix + i+1}}</td>
+              <td>{{(QRCodeReader?.name) ? (QRCodeReader?.name) : 'N.A'}}</td>
+              <!-- <td>{{QRCodeReader?.floor}}</td> -->
+              <td>{{(QRCodeReader?.ip) ? (QRCodeReader?.ip) : 'N.A'}}</td>
+              <td>{{(QRCodeReader?.port) ? (QRCodeReader?.port) : 'N.A'}}</td>
+              <td>
+                <button class="btn btn-green text-success">
+                  <mat-icon matTooltip="Edit" role="img" [routerLink]="['edit', QRCodeReader?.id]"
+                    class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true"
+                    data-mat-icon-type="font">edit</mat-icon>
+                </button>
+                <button class="btn btn-red text-danger" (click)="onDelete(QRCodeReader)">
+                  <mat-icon matTooltip="Delete" role="img" class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true"
+                    data-mat-icon-type="font">delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <ng-container *ngIf="QRCodeReaderList?.length">
+      <pagination [paginationList]="pagination" [selectedPageLimit]="currentPageLimit" [currentPage]="currentPage"
+        (onPageChange)="getPage($event)"
+        [from]="columnNumberPrefix+1"
+        [to]="QRCodeReaderList?.length+columnNumberPrefix"
+        [recordCount]="recordCount"
+        [lastPage]="lastpage"
+        >
+      </pagination>
+    </ng-container>
+    <ng-container *ngIf="!QRCodeReaderList?.length">
+      <p>{{'PAGINATIONTEXT.NOTFOUND' | translate}} </p>
+    </ng-container>
+  </mat-expansion-panel>
+
+</div>

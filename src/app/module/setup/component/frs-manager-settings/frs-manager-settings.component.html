@@ -1,0 +1,62 @@
+<div class="main-page">
+
+    <div class="bread-crumb">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">{{"FRSMANAGER_SETTINGS.SETUP" | translate }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{"FRSMANAGER_SETTINGS.FRSMANAGER" | translate }}</li>
+            </ol>
+        </nav>
+    </div>
+
+
+
+    <mat-expansion-panel [expanded]="1" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title class="d-flex justify-content-between align-items-center">
+                <h5>{{"FRSMANAGER_SETTINGS.FRSMANAGERSETTING" | translate }}</h5>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <section>
+            <form [formGroup]="frsManagerForm">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">* {{"FRSMANAGER_SETTINGS.IN_IP_ADDRESS" | translate }}</label>
+                  <input type="name" class="form-control" id="" formControlName="iPaddress"  placeholder="127.0.0.1">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">* {{"FRSMANAGER_SETTINGS.IN_PROTOCAL" | translate }}</label>
+                    <input type="name" class="form-control" id="" formControlName="protocol"  placeholder="https">
+                </div>
+
+
+                <div class="form-group">
+                  <label for="exampleInputEmail1">* {{"FRSMANAGER_SETTINGS.IN_PORT" | translate }}</label>
+                  <input type="name" class="form-control" id="" formControlName="port"  placeholder="4452">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">* {{"FRSMANAGER_SETTINGS.IN_ACCOUNT" | translate }}</label>
+                    <input type="name" class="form-control" id="" formControlName="email" placeholder="VMS_server">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">* {{"FRSMANAGER_SETTINGS.IN_PASSWORD" | translate }}</label>
+                    <input type="password" class="form-control" id="" formControlName="password"  placeholder="">
+                </div>
+
+
+            </form>
+        </section>
+
+        <div class="exp-footer exp-footer-bg">
+            <div class="d-flex justify-content-end align-items-end">
+                <button mat-flat-button class="btn-blue" (click)="submit()">{{"FRSMANAGER_SETTINGS.IN_SUBMIT" | translate }}</button>
+                <button mat-button>{{"FRSMANAGER_SETTINGS.IN_RESET" | translate }}</button>
+            </div>
+        </div>
+
+    </mat-expansion-panel>
+
+
+</div>

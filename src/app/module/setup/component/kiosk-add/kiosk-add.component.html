@@ -1,0 +1,317 @@
+<section class="side_container">
+  <div class="container-fluid">
+    <div class="main-page">
+      <div class="main-div padding-x">
+        <div class="d-flex justify-content-between">
+          <!-- <h3 class="form-hadding">
+            {{ isEditing ? "Update" : "Add" }}
+            {{ "COMMON.BREADCUM.HOTEL" | translate }}
+          </h3> -->
+        </div>
+        <div class="d-flex justify-content-between">
+          <!-- <h3 class="form-hadding font-size18">
+            {{ "COMMON.COMPANY_DETAILS" | translate }}
+          </h3> -->
+        </div>
+        <form [formGroup]="addForm" class="pt-1 row justify-content-between">
+          <!-- <hr /> -->
+          <!-- userName-->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label">User Name</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput maxlength="50" [formControl]="addForm.controls['userName']" 
+                placeholder="User Name" (click)="editingInputClick()"
+                
+                />
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['userName'].errors">User Name
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+              <mat-error *ngIf="addForm.get('userName')?.errors?.pattern">
+                Invalid Input Data
+              </mat-error>
+            </div>
+          </div>
+
+          <!-- buildingName-->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label">Building Name</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <!-- <mat-select placeholder="Select Building Name" [formControl]="addForm.controls['buildingName']">
+                  <mat-option *ngFor="let building of buildNameList" [value]="building?.buildingName"
+                    (click)="selectBuilding(building)">
+                    {{ building?.buildingName }}
+                  </mat-option>
+                </mat-select> -->
+                <mat-select placeholder="Select Building Name" [formControl]="addForm.controls['buildingName']">
+                  <mat-option *ngFor="let buildingName of buildingNameList" [value]="buildingName?.buildingName"
+                    (click)="selectFloor(buildingName)">
+                    {{ buildingName?.buildingName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['buildingName'].errors">Building Name
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+            </div>
+          </div>
+
+          <!-- password-->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label">Password</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput type="password" 
+                [formControl]="addForm.controls['password']" 
+                placeholder="Password" [maxlength]="50"
+                [type]="hide ? 'password' : 'text'"/>
+                <a class="eye-icon" (click)="hide = !hide"><mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon></a>
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['password'].errors">Password
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+              <ul class="ulDOt">
+                <li>
+                  <mat-error *ngIf="
+                  addForm.get('password').touched &&  (addForm.get('password').hasError('hasSmallCase') ||
+                  addForm.get('password').hasError('required'))
+                  ">
+                    <mat-icon>close</mat-icon>{{ "PROFILE-NEW.AT_LOWERCE" | translate }}</mat-error>
+      
+                </li>
+                <li>
+                  <mat-error *ngIf="
+                  addForm.get('password').touched && (addForm.get('password').hasError('hasCapitalCase') ||
+                  addForm.get('password').hasError('required'))
+                  ">
+                    <mat-icon>close</mat-icon>{{ "PROFILE-NEW.AT_UPPERCASE" | translate }}</mat-error>
+                </li>
+                <li>
+                  <mat-error *ngIf="
+                  addForm.get('password').touched && (addForm.get('password').hasError('minlength') ||
+                  addForm.get('password').hasError('required'))
+                  ">
+                    <mat-icon>close</mat-icon>{{ "PROFILE-NEW.AT_CHARACTERS" | translate }}</mat-error>
+                </li>
+                <!-- <li>
+                  <mat-error *ngIf="
+                  addForm.get('new_password').touched &&  (addForm.get('new_password').hasError('hasNumber') ||
+                  addForm.get('new_password').hasError('required'))
+                  ">
+                    <mat-icon>close</mat-icon>{{ "PROFILE-NEW.AT_NUMBER" | translate }}</mat-error>
+                </li> -->
+                <li>
+                  <mat-error *ngIf="
+                  addForm.get('password').touched && (addForm.get('password').hasError('hasSpecialCharacters') ||
+                  addForm.get('password').hasError('required'))
+                  ">
+                    <mat-icon>close</mat-icon>{{ "PROFILE-NEW.AT_SYMBOL" | translate }}</mat-error>
+                </li>
+                  <!-- <li>
+                  <mat-error *ngIf="currentUser?.firstName == addForm.get('new_password').value">
+                    <mat-icon>close</mat-icon>{{ "PROFILE-NEW.USER_NAME" | translate }}</mat-error>
+                </li> -->
+              </ul>
+            </div>
+          </div>
+
+            <!-- Confirm password-->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label">Confirm Password</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput type="password" 
+                [formControl]="addForm.controls['confirm_password']" 
+                placeholder="Password" [maxlength]="50"
+                [type]="hide1 ? 'password' : 'text'"/>
+                <a class="eye-icon" (click)="hide1 = !hide1"><mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon></a>
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['confirm_password'].errors">Confirm Password
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+              <mat-error *ngIf="
+              addForm.get('confirm_password').touched &&  (addForm.get('confirm_password').hasError('validatePassword') ||
+              addForm.get('confirm_password').hasError('required'))
+              ">
+                * Your Password and Confirm Password must be match
+              </mat-error>
+            </div>
+          </div>
+
+          <!-- kisokId-->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label">Kiosk ID</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput [formControl]="addForm.controls['kisokId']" [maxlength]="50" 
+                  placeholder="Kiosk ID" (click)="editingInputClick()"/>
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['kisokId'].errors">Kiosk ID
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+              <mat-error *ngIf="addForm.get('kisokId')?.errors?.pattern">
+                Invalid Input Data
+              </mat-error>
+            </div>
+          </div>
+
+          <!-- kisokName-->
+          <div class="form-group w-45 input-fildcl">
+            <label class="control-label">Kiosk Name</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput [formControl]="addForm.controls['kisokName']" 
+                maxlength="50" placeholder="Kiosk Name" (click)="editingInputClick()"/>
+              </mat-form-field>
+              <mat-error *ngIf="submitted && addForm.controls['kisokName'].errors">Kiosk Name
+                {{ "VALIDATE.ERROR9" | translate }}
+              </mat-error>
+              <mat-error *ngIf="addForm.get('kisokName')?.errors?.pattern">
+                Invalid Input Data
+              </mat-error>
+            </div>
+          </div>
+
+         
+          <div class="row mb-4  mt-4">
+            <!-- Allow visitor registrations -->
+            <div class="col-md-4">
+              <div class="form-group switch-btn">
+                <label for="exampleInputEmail1">{{"KIOSK.EDIT_ALLOW_VISITOR" | translate }}</label><br />
+                <mat-slide-toggle [formControl]="addForm.controls['allowVisitorRegistrations']"></mat-slide-toggle>
+              </div>
+            </div>
+
+            <!-- Enable Heightened security mode -->
+            <div class="col-md-4">
+              <div class="form-group switch-btn">
+                <label for="exampleInputEmail1">{{"KIOSK.EDIT_ENABLE_HEIGH" | translate }}</label><br />
+                <mat-slide-toggle [formControl]="addForm.controls['heightendMode']"></mat-slide-toggle>
+              </div>
+            </div>
+
+            <!-- Enable Self-declaration form -->
+            <div class="col-md-4">
+              <div class="form-group switch-btn">
+                <label for="exampleInputEmail1">{{"KIOSK.EDIT_ENABLE_SELF" | translate }}</label><br />
+                <mat-slide-toggle [formControl]="addForm.controls['selfDeclaration']"></mat-slide-toggle>
+              </div>
+            </div>
+
+            <!-- status-->
+            <!-- <div class="col-md-3">
+                <div class="form-group switch-btn">
+                  <label for="exampleInputEmail1">status</label><br />
+                  <mat-slide-toggle [formControl]="addForm.controls['status']"></mat-slide-toggle>
+                </div>
+              </div> -->
+
+          </div>
+          <hr />
+          <!-- visitorHours -->
+
+
+          <section formArrayName="visitorHours">
+            <div class="row mt-3 mb-3">
+              <div class="col-md-10">
+                <div class="d-flex justify-content-between align-items-center">
+                  <label>
+                    <h4>{{ "KIOSK.EDIT_VISITOR_REGIS" | translate }}</h4>
+                  </label>
+                  <button type="button" class="btn btn-secondary" [disabled]="!addForm.valid || submitted2" (click)="add()">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon">add</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row pt-5" *ngFor="let item of t.controls; let i = index">
+              <div [formGroup]="item" class="row">
+                <!-- day -->
+                <div class="col-md-3">
+                  <div class="form-group position-input">
+                    <label class="control-label">* {{ "KIOSK.EDIT_DAY_OF_THE_WEEK" | translate }}</label>
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-select placeholder="Select Day" [formControl]="item.controls['day']" (click)="editingInputClick()">
+                        <mat-option *ngFor="let day of days" [value]="day?.name"
+                        (click)="selectweakday(day,i)">
+                          {{ day?.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-error *ngIf="submitted && item.controls['day'].errors">day
+                      {{ "VALIDATE.ERROR9" | translate }}
+                    </mat-error>
+                  </div>
+                </div>
+
+                <!-- startTime -->
+                <div class="col-md-3">
+                  <label for="inputState"><em>*</em> {{ "KIOSK.EDIT_START_TIME" | translate }}</label>
+                <mat-form-field appearance="outline" class="w-100">
+                  <!-- <mat-select placeholder="Select Start Time" #select [formControl]="item.controls['startTime']" (selectionChange)="changeStartDate($event.value, i)"> -->
+                    <mat-select placeholder="Select Start Time" #select [formControl]="item.controls['startTime']"
+                    (click)="editingInputClick()">
+                          <mat-option *ngFor="let time of timingArray; let startTimeIndex=index" [value]="time"  (click)="startTimeSlot(time,i,startTimeIndex)">
+                              {{ time }}
+                          </mat-option>
+                  </mat-select>
+
+              </mat-form-field>
+
+
+                  <mat-error *ngIf="submitted && item.controls['startTime'].errors">Start Time
+                    {{ "VALIDATE.ERROR9" | translate }}
+                  </mat-error>
+                </div>
+
+                <!-- endTime -->
+                <div class="col-md-3">
+                  <label for="inputState"><em>*</em> {{ "KIOSK.EDIT_END_TIME" | translate }}</label>
+
+                <mat-form-field appearance="outline" class="w-100">
+
+                  <mat-select placeholder="Select End Time" #select [formControl]="item.controls['endTime']"
+                  (click)="editingInputClick()" >
+                          <mat-option *ngFor="let time of timingArray; let endTimeIndex=index"[value]="time"
+                           (click)="endTimeSlot(time,i,endTimeIndex)">
+                           {{ time }}
+                          </mat-option>
+                  </mat-select>
+
+              </mat-form-field>
+
+
+                  <mat-error *ngIf="submitted && item.controls['endTime'].errors">End Time
+                    {{ "VALIDATE.ERROR9" | translate }}
+                  </mat-error>
+                  <!-- <mat-error *ngIf="submitted2 && item.controls['endTime'].touched">
+                    End time should be greater than Start time
+                  </mat-error> -->
+                </div>
+
+                <!-- delete -->
+                <div class="col-md-3" *ngIf="i>0">
+                  <div class="form-group closetext-right">
+                    <label for="inputState">{{
+                      "KIOSK.EDIT_DELETE" | translate
+                      }}</label><br />
+                    <button mat-flat-button class="add-mult-btn mult-color" (click)="onDelete(i)">
+                      <mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="d-flex justify-content-end margin-y">
+            <button class="btn-black2" type="button" mat-flat-button (click)="back()">{{'COMMON.BACK' | translate}}</button>
+            <button class="btn-blue" type="submit" [disabled]="!addForm.valid || submitted2 || !inputedit" mat-flat-button (click)="submitForm()">{{"COMMON.SUBMIT" | translate }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

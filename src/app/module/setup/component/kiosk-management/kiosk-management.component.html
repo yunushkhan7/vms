@@ -1,0 +1,221 @@
+<div class="main-page">
+
+  <div class="bread-crumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Setup"> {{"COMPANY.SETUP" | translate }} </a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="#">{{"KIOSK.KIOSK2" | translate }}</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <mat-expansion-panel [expanded]="1" (opened)="setStep1(0)" (closed)="panelOpenState1 = false" hideToggle>
+    <mat-expansion-panel-header #panelH1 (click)="panelH1._toggle()">
+      <mat-panel-title class="d-flex justify-content-between align-items-center">
+        <h5>{{"RIPORT.TITLE_FILTER" | translate }}</h5>
+      </mat-panel-title>
+      <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState1" (click)="panelH1._toggle()">expand_more
+      </mat-icon>
+      <mat-icon matTooltip="expand_less" *ngIf="panelOpenState1" (click)="panelH1._toggle()">expand_less
+      </mat-icon>
+    </mat-expansion-panel-header>
+
+    <form [formGroup]="searchFilterForm">
+      <section>
+        <div class="form-group">
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label> {{"KIOSK.SEARCH_FILTER.NAME" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput placeholder="Kiosk Name" appInputRestriction
+                [formControl]="searchFilterForm.controls['kioskName']" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <label> {{"KIOSK.TH_BUILDING_NAME" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput placeholder="Building Name"  maxlength="50" appInputRestriction
+                [formControl]="searchFilterForm.controls['buildingName']" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label> {{"KIOSK.SEARCH_FILTER.SECURITY_CODE" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select placeholder="Please Select" [formControl]="searchFilterForm.controls['securityCode']">
+                  <!-- <mat-option *ngFor="let item of dropdownList" [value]="item?.value">{{item?.name}}</mat-option> -->
+                  <mat-option value=true>Yes</mat-option>
+                  <mat-option value=false>No</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <label>{{"KIOSK.SEARCH_FILTER.VISIITOR_REGISTRATION" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select placeholder="Please Select" [formControl]="searchFilterForm.controls['visitorReg']">
+                  <!-- <mat-option *ngFor="let item of dropdownList" [value]="item?.value">{{item?.name}}</mat-option> -->
+                  <mat-option value=true>Yes</mat-option>
+                  <mat-option value=false>No</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="add">
+              <label> {{"RIPORT.SELF_DECLARATION" | translate }} </label>
+              <button mat-flat-button class="add-mult-btn add-color">
+                <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="add()">add</mat-icon>
+              </button>
+            </div>
+
+          </div>
+
+
+      <div class="row" *ngIf="show">
+        <div class="col-md-3">
+          <div class="form-group position-input">
+            <!-- <label class="control-label"
+              >* {{ 'Select Answer' }}</label
+            > -->
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select placeholder="Select Answer" [formControl]="searchFilterForm.controls['declarations']">
+                <mat-option value=true>Yes</mat-option>
+                <mat-option value=false>No</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- <mat-form-field appearance="outline" class="w-100">
+              <mat-select placeholder="Please Select" [formControl]="searchFilterForm.controls['declarations']">
+                <mat-option *ngFor="let item of dropdownList" [value]="item.value">{{item.name}}</mat-option>
+              </mat-select>
+            </mat-form-field> -->
+
+          </div>
+        </div>
+      </div>
+
+
+        </div>
+      </section>
+
+
+    </form>
+    <div class="exp-footer exp-footer-bg">
+      <div></div>
+      <div class="d-flex justify-content-end align-items-end">
+        <!-- <button mat-flat-button class="btn-refresh w-button" (click)="clearForm()">
+          Refresh
+        </button> -->
+        <button mat-flat-button class="btn-black" [disabled]="!searchFilterForm.dirty" (click)="filterSearch($event)">
+          {{"COMMON.SUBMIT" | translate }}
+         </button>
+         <button  type="button" mat-flat-button class="btn-refresh w-button" (click)="reset()">Reset</button>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <!-- <p align="right">
+    <button type="button" [routerLink]="['addKiosk']" class="btn btn-secondary">
+      + Add
+    </button>
+  </p> -->
+
+  <mat-expansion-panel [expanded]="1" (opened)="setStep(0)" (closed)="panelOpenState = false" hideToggle>
+    <mat-expansion-panel-header #panelH (click)="panelH._toggle()">
+      <mat-panel-title class="d-flex justify-content-between align-items-center">
+        <h5>{{"KIOSK.KIOSK_LIST" | translate }}</h5>
+
+        <div class="head-icons">
+
+          <a (click)="EnableVisitorRegistrations()"><i class="fa fa-user-plus" matTooltip="Enable Visitor Registrations"  aria-hidden="true"></i></a>
+          <a (click)="DisableVisitorRegistrations()"><i class="fa fa-user-times" matTooltip="Disable Visitor Registrations" aria-hidden="true"></i></a>
+          <a (click)="EnableHeightendMode()"><i class="fa fa-calendar-check-o" matTooltip="Enable Heightened Mode" aria-hidden="true"></i></a>
+          <a (click)="DisableHeightendMode()"><i class="fa fa-calendar-times-o" matTooltip="Disable Heightened Mode" aria-hidden="true"></i></a>
+          <a (click)="EnableselfDeclaration()"><i class="fa fa-lock" matTooltip="Enable SelfDeclaration" aria-hidden="true"></i></a>
+          <a (click)="DisableselfDeclaration()"><i class="fa fa-unlock" matTooltip="Disable SelfDeclaration" aria-hidden="true"></i></a>
+          <span class="icon-color"> | </span>
+          <a (click)="DownloadExcel()"><i class="fa fa-file-excel-o" matTooltip="Export To Excel" aria-hidden="true"></i></a>
+          <!-- <a ><i class="fa fa-file-text-o icon-color" aria-hidden="true"></i></a>
+          <a ><i class="fa fa-pencil icon-color" aria-hidden="true"></i></a>
+          <a ><i class="fa fa-trash icon-color" aria-hidden="true"></i></a> -->
+          <span class="icon-color" *ngIf="permissionObject?.KioskManagement?.add"> | </span>
+          <a *ngIf="permissionObject?.KioskManagement?.add"><i class="fa fa-plus" matTooltip="Add Kiosk" [routerLink]="['addKiosk']" aria-hidden="true"></i></a>
+        </div>
+      </mat-panel-title>
+      <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState" (click)="panelH._toggle()">expand_more
+      </mat-icon>
+      <mat-icon matTooltip="expand_less" *ngIf="panelOpenState" (click)="panelH._toggle()">expand_less
+      </mat-icon>
+    </mat-expansion-panel-header>
+    <section>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">{{"KIOSK.TH_NO" | translate }}</th>
+              <th (click)="sortData('UserName')" scope="col">{{"KIOSK.TH_USERNAME" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th (click)="sortData('BuildingName')" scope="col">{{"KIOSK.TH_BUILDING_NAME" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th (click)="sortData('kisokId')" scope="col">{{"KIOSK.TH_KIOSK_ID" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th (click)="sortData('KisokName')" scope="col">{{"KIOSK.TH_KIOSK_NAME" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th (click)="sortData('AllowVisitorRegistrationsType')" scope="col">{{"KIOSK.TH_ALLOW_VISITOR" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th (click)="sortData('HeightendModeType')" scope="col">{{"KIOSK.TH_HEIGHTENDED" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th (click)="sortData('selfDeclarationType')" scope="col">{{"KIOSK.TH_SELF_DECL" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th (click)="sortData('status')" scope="col">{{"KIOSK.TH_STATUS" | translate }} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{"KIOSK.TH_CATION" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="kisokList">
+            <tr *ngFor="let kisok of kisokList; let i=index">
+              <td>{{columnNumberPrefix + i+1}}</td>
+              <td>{{(kisok?.userName) ? (kisok?.userName) : 'N.A'}}</td>
+              <td>{{(kisok?.buildingName) ? (kisok?.buildingName) : 'N.A'}}</td>
+              <td>{{(kisok?.kisokId) ? (kisok?.kisokId) : 'N.A'}}</td>
+              <td>{{(kisok?.kisokName) ? (kisok?.kisokName) : 'N.A'}}</td>
+              <td class="text-center">{{kisok?.allowVisitorRegistrations ? 'Yes' : 'No' }}</td>
+              <td class="text-center">{{kisok?.heightendMode? 'Yes' : 'No'}}</td>
+              <td class="text-center">{{kisok?.selfDeclaration ? 'Yes' : 'No'}}</td>
+              <td class="text-center">{{kisok?.status ? 'Online' : 'Offline'}}</td>
+              <td class="text-center">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                  <button mat-menu-item [routerLink]="['editKiosk', kisok?.id]">
+                    <span>
+                      <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color"
+                        aria-hidden="true" data-mat-icon-type="font">edit</mat-icon>
+                      Edit
+                    </span>
+                  </button>
+                  <button mat-menu-item *ngIf="permissionObject?.KioskManagement?.delete">
+                    <span (click)="onDelete(kisok)">
+                      <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color"
+                        aria-hidden="true" data-mat-icon-type="font">delete</mat-icon>
+                      Delete
+                    </span>
+                  </button>
+                </mat-menu>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <ng-container *ngIf="kisokList.length">
+      <pagination [paginationList]="pagination" [selectedPageLimit]="currentPageLimit" [currentPage]="currentPage"
+      (onPageChange)="getPage($event)"
+      [from]="columnNumberPrefix+1"
+        [to]="kisokList.length+columnNumberPrefix"
+        [recordCount]="recordCount" [lastPage]="lastpage"
+      >
+    </pagination>
+    </ng-container>
+    <ng-container *ngIf="!kisokList.length">
+      <p>{{'PAGINATIONTEXT.NOTFOUND' | translate}} </p>
+    </ng-container>
+
+  </mat-expansion-panel>
+</div>

@@ -1,0 +1,95 @@
+<div class="main-page">
+
+  <div class="bread-crumb">
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/Setup"> {{"LICENSE_KEYS.SETUP" | translate }} </a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a routerLink="/sell"> {{"LICENSE_KEYS.LICENSE" | translate }} </a></li>
+          </ol>
+      </nav>
+  </div>
+
+
+
+  <mat-expansion-panel [expanded]="1" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+          <mat-panel-title class="d-flex justify-content-between align-items-center">
+              <h5>{{"LICENSE_KEYS.LICENSE_LIST" | translate }} </h5>
+
+              <div class="head-icons">
+                  <a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+              </div>
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+      <section>
+          <div class="table-responsive">
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th scope="col">{{"LICENSE_KEYS.TH_NO" | translate }} </th>
+                          <th scope="col">{{"LICENSE_KEYS.TH_LICENSEKEY" | translate }} </th>
+                          <th scope="col">{{"LICENSE_KEYS.TH_MAC_ADDRESS" | translate }} </th>
+                          <th scope="col">{{"LICENSE_KEYS.TH_TRIAL" | translate }} </th>
+                          <th scope="col">{{"LICENSE_KEYS.TH_REGISTER_DATE" | translate }} </th>
+                          <th scope="col">{{"LICENSE_KEYS.TH_EXPIRED" | translate }} </th>
+                      </tr>
+                  </thead>
+                  <tbody *ngIf="licenseKeysList">
+                    <tr *ngFor="let license of licenseKeysList; let i=index">
+                      <td>{{i+1}}</td>
+                      <td>{{license?.liscenseKey}}</td>
+                      <td>{{license?.maCaddress}}</td>
+                      <td>{{license?.trial}}</td>
+                      <td>{{license?.registerDate}}</td>
+                      <td>{{license?.expired}}</td>
+                  </tr>
+                  </tbody>
+              </table>
+          </div>
+      </section>
+
+      <div class="exp-footer mb-16-px-2em">
+        <div class="col-auto my-1 shwo-text">
+            <label class="mr-sm-2" for="inlineFormCustomSelect">{{"SHWOPAGES.SHOW" | translate }} </label>
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                <option value="1">{{"SHWOPAGES.PAGI_1" | translate }}</option>
+                <option value="2">{{"SHWOPAGES.PAGI_2" | translate }}</option>
+                <option value="3">{{"SHWOPAGES.PAGI_3" | translate }}</option>
+            </select>
+            <label class="mr-sm-2" for="inlineFormCustomSelect">{{"SHWOPAGES.SHOWING" | translate }}</label>
+        </div>
+
+              <div class="pagination pagination-sm">
+                  <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item">
+                          <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">{{"PAGINATION.PAGI_PREV" | translate }} </span>
+                          </a>
+                        </li>
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#" tabindex="-1">{{"PAGINATION.PAGI_PREV" | translate }} </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">{{"PAGINATION.PAGI_1" | translate }} </a></li>
+                        <li class="page-item active"><a class="page-link" href="#">{{"PAGINATION.PAGI_2" | translate }} </a></li>
+                        <li class="page-item"><a class="page-link" href="#">{{"PAGINATION.PAGI_3" | translate }} </a></li>
+                        <li class="page-item">
+                          <a class="page-link" href="#">{{"PAGINATION.PAGI_NEXT" | translate }} </a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">{{"PAGINATION.PAGI_NEXT" | translate }} </span>
+                          </a>
+                        </li>
+                      </ul>
+                  </nav>
+              </div>
+      </div>
+
+  </mat-expansion-panel>
+
+  </div>
+
+

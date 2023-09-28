@@ -1,0 +1,92 @@
+<div class="main-page">
+
+  <div class="bread-crumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a href="#">{{'TH_FRSM.SUB_TITLE' | translate}}</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <mat-expansion-panel [expanded]="1" (opened)="setStep(0)" (closed)="panelOpenState = false" hideToggle>
+    <mat-expansion-panel-header #panelH (click)="panelH._toggle()">
+      <mat-panel-title class="d-flex justify-content-between align-items-center">
+        <h5>I/O-Trigger List</h5>
+
+        <div class="head-icons">
+         
+          <a (click)="DownloadExcel()" matTooltip="Excel download"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+
+          <a [routerLink]="['add']" matTooltip="Add I/O-Trigger"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        </div>
+      </mat-panel-title>
+      <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState" (click)="panelH._toggle()">expand_more
+      </mat-icon>
+      <mat-icon matTooltip="expand_less" *ngIf="panelOpenState" (click)="panelH._toggle()">expand_less
+      </mat-icon>
+    </mat-expansion-panel-header>
+    <section>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">{{'TH_FRSM.TH_NO' | translate}}</th>
+              <th (click)="sortData('Name')" scope="col">{{'TH_FRSM.TH_NAME' | translate}} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th (click)="sortData('BuildingName')" scope="col">{{'COMPANY.TH_BUILDING_PERSON'| translate}} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th (click)="sortData('FloorName')" scope="col">{{'TH_FRSM.TH_FLOOR'| translate}} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th (click)="sortData('QRcodeReader')" scope="col">{{'TH_FRSM.TH_QRCODE'| translate}} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th (click)="sortData('IO_Box')" scope="col">{{'TH_FRSM.TH_IOBOX'| translate}} <i class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{'TH_FRSM.TH_ACTION'| translate}}</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="frsmDoorManagementList">
+            <tr *ngFor="let doorManagement of frsmDoorManagementList; let i=index">
+              <td>{{columnNumberPrefix + i+1}}</td>
+              <td>{{(doorManagement?.name) ? (doorManagement?.name) : 'N.A'}}</td>
+              <td>{{(doorManagement?.buildingName) ? (doorManagement?.buildingName) : 'N.A'}}</td>
+              <td *ngFor="let floor of doorManagement?.floor">
+                <!-- {{ company?.floorName }} -->
+                {{ floor?.name }}
+                <!-- <ul>
+                  <li *ngFor="let floor of doorManagement?.floor">
+                    {{ floor?.name }}
+                  </li>
+                </ul> -->
+              </td>
+              <td>&#9679;{{(doorManagement?.qRcodeReader) ? (doorManagement?.qRcodeReader) : 'N.A'}}</td>
+              <td>&#9679;{{(doorManagement?.iO_Box) ? (doorManagement?.iO_Box) : 'N.A'}}</td>
+              <td>
+                <button class="btn btn-green text-success">
+                  <mat-icon matTooltip="Edit" role="img" [routerLink]="['edit', doorManagement?.id]"
+                    class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true"
+                    data-mat-icon-type="font">edit</mat-icon>
+                </button>
+                <button class="btn btn-red text-danger" (click)="onDelete(doorManagement)">
+                  <mat-icon matTooltip="Delete" role="img" class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true"
+                    data-mat-icon-type="font">delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <ng-container *ngIf="frsmDoorManagementList?.length">
+      <pagination [paginationList]="pagination" [selectedPageLimit]="currentPageLimit" [currentPage]="currentPage"
+        (onPageChange)="getPage($event)"
+        [from]="columnNumberPrefix+1"
+        [to]="frsmDoorManagementList?.length+columnNumberPrefix"
+        [recordCount]="recordCount"
+        [lastPage]="lastpage"
+        >
+      </pagination>
+    </ng-container>
+    <ng-container *ngIf="!frsmDoorManagementList?.length">
+      <p>{{'PAGINATIONTEXT.NOTFOUND' | translate}} </p>
+    </ng-container>
+
+
+  </mat-expansion-panel>
+
+</div>

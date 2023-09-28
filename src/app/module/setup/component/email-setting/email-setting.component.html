@@ -1,0 +1,62 @@
+<div class="main-page">
+
+    <div class="bread-crumb">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">{{"EMAIL_SETTINGS.SETUP" | translate }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">{{"EMAIL_SETTINGS.EMAIL_SETT" | translate }}</a></li>
+            </ol>
+        </nav>
+    </div>
+
+
+
+    <mat-expansion-panel [expanded]="1" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title class="d-flex justify-content-between align-items-center">
+                <h5>{{"EMAIL_SETTINGS.EMAIL_SETT2" | translate }}</h5>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <section>
+            <form [formGroup]="emailSettingForm">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">* {{"EMAIL_SETTINGS.IN_SMTP_HOSTNAME" | translate }}</label>
+                  <input type="name" class="form-control" id="" formControlName="smtpHostname"  placeholder="mail.isapsolution.com">
+                </div>
+
+
+                <div class="form-group">
+                  <label for="exampleInputEmail1">* {{"EMAIL_SETTINGS.IN_PORT_NUMBER" | translate }}</label>
+                  <input type="name" class="form-control" id="" formControlName="portNumber"  placeholder="25">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">* {{"EMAIL_SETTINGS.IN_EMAIL" | translate }}</label>
+                    <input type="email" class="form-control" id="" formControlName="email"  placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">* {{"EMAIL_SETTINGS.IN_PASSWORD" | translate }}</label>
+                    <input type="password" class="form-control" id="" formControlName="password"   placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">* {{"EMAIL_SETTINGS.IN_ENABLE" | translate }}</label><br/>
+                   <mat-slide-toggle></mat-slide-toggle>
+                </div>
+
+            </form>
+        </section>
+
+        <div class="exp-footer exp-footer-bg">
+            <div class="d-flex justify-content-end align-items-end">
+                <button mat-flat-button class="btn-black">{{"EMAIL_SETTINGS.IN_TEST" | translate }}</button>
+                <button mat-flat-button class="btn-blue" (click)="submit()">{{"EMAIL_SETTINGS.IN_SUBMIT" | translate }}</button>
+                <button mat-button>{{"EMAIL_SETTINGS.IN_RESET" | translate }}</button>
+            </div>
+        </div>
+
+    </mat-expansion-panel>
+
+
+</div>

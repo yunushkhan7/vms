@@ -1,0 +1,291 @@
+<mat-card class="side-navbar active-nav" id="sidebar" [class.full]="sidenavshow" [class.half]="!sidenavshow">
+
+  <div class="d-flex justify-content-between bg-prime d-none-mob">
+    <div class="nav-logo" [class.w-0]="!sidenavshow">
+      <img src="assets/images/logo.png" routerLink="/report" />
+    </div>
+    <div class="">
+      <button class="btn_toggle mob" (click)="ShowsidebarMob()">
+        <mat-icon [class.icon_rotate]="!sidenavshow">keyboard_double_arrow_left</mat-icon>
+      </button>
+      <!--   <button class="btn_toggle" (click)="toggleShowsidebar()">
+       <mat-icon [class.icon_rotate]="!sidenavshow">keyboard_double_arrow_left</mat-icon>
+      </button> -->
+      <nav class="navbar navbar-dark" (click)="toggleShowsidebar()">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+          aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+          <!-- <span class="navbar-toggler-icon"></span> -->
+          <mat-icon>menu</mat-icon>
+        </button>
+      </nav>
+
+
+    </div>
+  </div>
+
+  <div class="ul_wrap">
+    <ul class="">
+      <div class="nav-link" *ngIf="permissionObject?.VisitorAccessLogs?.list">
+        <li (click)="toggleShow()" routerLinkActive="active">
+          <i class="fa fa-flag" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.REPORT' | translate}}</span>
+          <mat-icon *ngIf="!isShown">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="isShown">keyboard_arrow_up</mat-icon>
+        </li>
+      </div>
+      <div *ngIf="isShown && permissionObject?.VisitorAccessLogs?.list" class="nav-link sublink">
+        <li routerLinkActive="active" [routerLink]="['report']" class="subnav_link" (click)="ShowsidebarMob()">
+          <!-- <div class="dot"></div> -->
+          <i class="fa fa-eye" aria-hidden="true"></i>
+          <span class="mx-2" [routerLink]="['report']" [class.none]="!sidenavshow">{{"SIDENAVBAR.VISITOR_ACCESS_LOG" | translate}}</span>
+        </li>
+      </div>
+
+      <div class="nav-link" *ngIf="permissionObject?.VisitorBlackListing?.list">
+        <li routerLink="/black-list" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <i class="fa fa-shield" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.BLACKLIST' | translate}}</span>
+        </li>
+      </div>
+
+      <div class="nav-link" *ngIf="permissionObject?.Buildings?.list
+      || permissionObject?.BuildingFloorManagement?.list
+      || permissionObject?.VMSCompanyManagement?.list || permissionObject?.KioskManagement?.list
+      || permissionObject?.Users?.list || permissionObject?.SelfDeclaration?.list 
+      || permissionObject?.Logs?.list || permissionObject?.others?.list
+      ">
+        <li (click)="toggleSetup()" routerLinkActive="active">
+          <i class="fa fa-cog" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.SETUP' | translate}}</span>
+          <mat-icon *ngIf="!isSetup">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="isSetup">keyboard_arrow_up</mat-icon>
+        </li>
+      </div>
+
+      <ng-container *ngIf="isSetup">
+        <div class="nav-link sublink" *ngIf="permissionObject?.Buildings?.list">
+          <li [routerLink]="['setup/building']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-building" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.BUILDING' | translate}}</span>
+          </li>
+        </div>
+
+        <div class="nav-link sublink" *ngIf="permissionObject?.BuildingFloorManagement?.list">
+          <li [routerLink]="['setup/floor']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-level-up" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">{{"SIDENAVBAR.FLOOR" | translate}}</span>
+          </li>
+        </div>
+
+        <div class="nav-link sublink" *ngIf="permissionObject?.VMSCompanyManagement?.list">
+          <li [routerLink]="['setup/host-company']" routerLinkActive="active" class="subnav_link"
+            (click)="ShowsidebarMob()">
+            <i class="fa fa-area-chart" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.COMPANY' | translate}}</span>
+          </li>
+        </div>
+
+        <div class="nav-link sublink" *ngIf="permissionObject?.KioskManagement?.list">
+          <li [routerLink]="['setup/kiosk']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-stop" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.KIOSK' | translate}}</span>
+          </li>
+        </div>
+
+        <div class="nav-link sublink" *ngIf="permissionObject?.SelfDeclaration?.list">
+          <li [routerLink]="['setup/Self-declaration']" routerLinkActive="active" class="subnav_link"
+            (click)="ShowsidebarMob()">
+            <i class="fa fa-question" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.SELF_DECLARATION' | translate}}</span>
+          </li>
+        </div>
+
+        <div class="nav-link sublink" *ngIf="permissionObject?.Users?.list">
+          <li [routerLink]="['setup/account']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.ACCOUNT' | translate}}</span>
+          </li>
+        </div>
+
+        <!-- <div  class="nav-link sublink">
+          <li [routerLink]="['setup/license-keys']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-certificate" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">License</span>
+          </li>
+        </div> -->
+
+        <!-- <div  class="nav-link sublink">
+          <li [routerLink]="['setup/frsManager-settings']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-list-alt" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">FRS Manager</span>
+          </li>
+        </div> -->
+
+
+        <!-- <div  class="nav-link sublink">
+          <li [routerLink]="['setup/email-setting']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <mat-icon>inbox</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">Email Setting</span>
+          </li>
+        </div> -->
+
+
+        <!-- <div  class="nav-link sublink">
+          <li [routerLink]="['setup/visit-purposes']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-tag" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">Purposes</span>
+          </li>
+        </div> -->
+
+
+        <div class="nav-link sublink" *ngIf="permissionObject?.others?.list">
+          <li [routerLink]="['setup/other']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-file" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.OTHERS' | translate}}</span>
+          </li>
+        </div>
+      </ng-container>
+
+      <div class="nav-link" *ngIf="permissionObject?.Logs?.list">
+        <li [routerLink]="['logs']" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <i class="fa fa-clipboard" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.LOGS' | translate}}</span>
+        </li>
+      </div>
+
+      <hr class="hr-clr" *ngIf="permissionObject?.DoorDevicesManagement?.list">
+
+      <!-- <div class="nav-link">
+        <li routerLink="/frsm-account" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <mat-icon> account_box </mat-icon>
+          <span class="mx-2" [class.none]="!sidenavshow">Account Management</span>
+        </li>
+      </div>
+
+      <div class="nav-link">
+        <li routerLink="/frsm-building" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <mat-icon> domain </mat-icon>
+          <span class="mx-2" [class.none]="!sidenavshow">Building Management</span>
+        </li>
+      </div>
+
+      <div class="nav-link">
+        <li routerLink="/frsm-floor" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <i class="fa fa-level-up" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">Floor Management</span>
+        </li>
+      </div> -->
+
+      <div class="nav-link" *ngIf="permissionObject?.DoorsManagement?.list">
+        <li routerLink="/frsm-door" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <i class="fa fa-columns" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">Door Management</span>
+        </li>
+      </div>
+
+      <!-- <div class="nav-link" *ngIf="permissionObject?.FRSMCompanyManagement?.list">
+        <li routerLink="/frsm-company" routerLinkActive="active" (click)="ShowsidebarMob()">
+            <i class="fa fa-area-chart" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">Company Management</span>
+        </li>
+      </div> -->
+
+      <div class="nav-link" *ngIf="permissionObject?.DoorDevicesManagement?.list">
+        <li routerLink="/frsm-io-trigger" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <mat-icon> line_weight </mat-icon>
+          <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.IO_TRIGGER_MANAGEMENT' | translate}}</span>
+        </li>
+      </div>
+
+
+      <div class="nav-link" *ngIf="permissionObject?.ACSServer?.list
+        || permissionObject?.IOBoxManagement?.list
+        || permissionObject?.QrCodeManagement?.list
+        || permissionObject?.FRserverManagment?.list
+      ">
+        <li (click)="toggleSettings()" routerLinkActive="active">
+          <i class="fa fa-cog" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.SETTINGS' | translate}}</span>
+          <mat-icon *ngIf="!isSetting">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="isSetting">keyboard_arrow_up</mat-icon>
+        </li>
+      </div>
+
+      <ng-container *ngIf="isSetting">
+        <!-- <div class="nav-link sublink" *ngIf="permissionObject?.ACSServer?.list">
+          <li [routerLink]="['settings/acs-server']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-building" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.ACS_SERVER' | translate}}</span>
+          </li>
+        </div> -->
+
+        <div class="nav-link sublink" *ngIf="permissionObject?.IOBoxManagement?.list">
+          <li [routerLink]="['settings/io-box']" routerLinkActive="active" class="subnav_link"
+            (click)="ShowsidebarMob()">
+            <i class="fa fa-object-group" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.IO_BOX' | translate}}</span>
+          </li>
+        </div>
+
+        <div class="nav-link sublink" *ngIf="permissionObject?.QrCodeManagement?.list">
+          <li [routerLink]="['settings/qr-code-reader']" routerLinkActive="active" class="subnav_link"
+            (click)="ShowsidebarMob()">
+            <i class="fa fa-qrcode" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.QR_CODE_READER' | translate}}</span>
+          </li>
+        </div>
+
+        <!-- <div  class="nav-link sublink">
+          <li [routerLink]="['settings/smtp']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <mat-icon>storage</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">SMTP</span>
+          </li>
+        </div>
+
+        <div  class="nav-link sublink">
+          <li  [routerLink]="['settings/vms']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <mat-icon>storage</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">VMS</span>
+          </li>
+        </div> -->
+
+        <div class="nav-link sublink" *ngIf="permissionObject?.FRserverManagment?.list">
+          <li [routerLink]="['settings/frs']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <mat-icon>storage</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDENAVBAR.FRS' | translate}}</span>
+          </li>
+        </div>
+        <!--
+        <div  class="nav-link sublink">
+          <li [routerLink]="['settings/email-notification']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <mat-icon>inbox</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">Email Notification</span>
+          </li>
+        </div>
+
+        <div  class="nav-link sublink">
+          <li [routerLink]="['settings/license']" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <i class="fa fa-cog" aria-hidden="true"></i>
+            <span class="mx-2" [class.none]="!sidenavshow">License</span>
+          </li>
+        </div> -->
+
+      </ng-container>
+
+      <!-- <div class="nav-link">
+        <li [routerLink]="['frsm-investigation']" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <mat-icon>flag</mat-icon>
+          <span class="mx-2" [class.none]="!sidenavshow">Investigation</span>
+        </li>
+      </div>
+
+      <div class="nav-link">
+        <li [routerLink]="['frsm-logs']" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <i class="fa fa-clipboard" aria-hidden="true"></i>
+          <span class="mx-2" [class.none]="!sidenavshow">Logs</span>
+        </li>
+      </div> -->
+
+    </ul>
+  </div>
+</mat-card>

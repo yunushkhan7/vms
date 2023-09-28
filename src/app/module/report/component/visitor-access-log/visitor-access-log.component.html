@@ -1,0 +1,402 @@
+<div class="main-page">
+
+
+  
+  <div class="bread-crumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Reports">{{"RIPORT.REPORTS" | translate }} </a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a
+            routerLink="/visitor-access-log">{{"RIPORT.VISITOR_ACCESS_LOG" | translate }} </a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <mat-expansion-panel [expanded]="1" (opened)="setStep1(0)" (closed)="panelOpenState1 = false" hideToggle>
+    <mat-expansion-panel-header #panelH1 (click)="panelH1._toggle()">
+      <mat-panel-title class="d-flex justify-content-between align-items-center">
+        <h5>{{"RIPORT.TITLE_FILTER" | translate }}</h5>
+      </mat-panel-title>
+      <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState1" (click)="panelH1._toggle()">expand_more
+      </mat-icon>
+      <mat-icon matTooltip="expand_less" *ngIf="panelOpenState1" (click)="panelH1._toggle()">expand_less
+      </mat-icon>
+    </mat-expansion-panel-header>
+
+    <form [formGroup]="searchFilterForm">
+      <section>
+        <div class="form-group">
+          <div class="row mt-3">
+            <div class="col-md-6 date-icon-left">
+              <label> <em>*</em> {{"RIPORT.START_DATE" | translate }}</label>
+              <div class="class">
+                <!-- <mat-form-field appearance="outline" class="w-100">
+                  <input [formControl]="searchFilterForm.controls['startDate']" (ngModelChange)="startDate($event)"
+                    matInput [max]="maxDate" [matDatepicker]="picker" placeholder="Sunday, May 1, 2022">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field> -->
+                <!-- <mat-form-field appearance="outline" class="w-100">
+                  <input [formControl]="searchFilterForm.controls['startDate']" matInput [matDatepicker]="picker"
+                    [placeholder]="firstWeekDay" [max]="maxDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field> -->
+
+                <mat-form-field appearance="outline" class="w-100">
+                  <!-- <mat-label>{{ 'LOGS.DATE' | translate }}</mat-label> -->
+                  <input matInput   [ngxMatDatetimePicker]="picker" appInputRestriction
+                  [formControl]="searchFilterForm.controls['startDate']" onkeydown="event.preventDefault()"
+                  [max]="maxDate"  (dateChange)="eDateChangedStart($event)" (paste)="$event.preventDefault()"
+                  onkeypress="return String.fromCharCode(event.charCode).match(/[^0-9]/g) === null"
+                  [placeholder]="currentDate | date:'medium' ">
+                  <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <ngx-mat-datetime-picker
+                  #picker
+                  [showSpinners]="true"
+                  [showSeconds]="false"
+                  [enableMeridian]="true"
+                  
+                  [stepHour]="1" [stepMinute]="1" [stepSecond]="1"
+                >
+                  <ng-template>
+                    <span>OK</span>
+                  </ng-template>
+                </ngx-mat-datetime-picker>
+                </mat-form-field>
+
+              </div>
+            </div>
+            <div class="col-md-6 date-icon-left">
+              <label> <em>*</em> {{"RIPORT.END_DATE" | translate }}</label>
+              <div class="class">
+                <!-- <mat-form-field appearance="outline" class="w-100">
+                  <input [formControl]="searchFilterForm.controls['endDate']" (ngModelChange)="endDate($event)" matInput
+                    [min]="minDate" [matDatepicker]="picker1" placeholder="Sunday, May 1, 2022">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field> -->
+                <!-- <mat-form-field appearance="outline" class="w-100">
+                  <input [formControl]="searchFilterForm.controls['endDate']" matInput [matDatepicker]="picker1"
+                    [placeholder]="lastWeekDay" [min]="minDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field> -->
+
+                <mat-form-field appearance="outline" class="w-100">
+                  <!-- <mat-label>{{ 'LOGS.DATE' | translate }}</mat-label> -->
+                  <input matInput [ngxMatDatetimePicker]="picker1"
+                  [formControl]="searchFilterForm.controls['endDate']" onkeydown="event.preventDefault()"
+                  [min]="minDate"  [max]="maxDate" appInputRestriction (paste)="$event.preventDefault()"
+                  onkeypress="return String.fromCharCode(event.charCode).match(/[^0-9]/g) === null"
+                  [placeholder]="lastDayOfMonth | date:'medium' ">
+                  <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                  <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker> -->
+                  <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker1"
+                ></mat-datepicker-toggle>
+                <ngx-mat-datetime-picker
+                  #picker1
+                  [showSpinners]="true"
+                  [showSeconds]="false"
+                  [enableMeridian]="true"
+                >
+                  <ng-template>
+                    <span>OK</span>
+                  </ng-template>
+                </ngx-mat-datetime-picker>
+                </mat-form-field>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label> {{"RIPORT.KIOSK" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select placeholder="Please Select" [formControl]="searchFilterForm.controls['kioskName']">
+                  <mat-option *ngFor="let kiosk of kioskList" [value]="kiosk.kioskName">
+                    {{kiosk.kioskName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <label>{{"RIPORT.EVENT" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select placeholder="Please Select" [formControl]="searchFilterForm.controls['eventName']">
+                  <mat-option *ngFor="let event of eventTypeList" value="{{event}}">
+                    {{event}}
+                  </mat-option>
+                </mat-select>
+
+                <!-- <mat-select placeholder="Select" #select multiple 
+                [formControl]="searchFilterForm.controls['eventName']">
+                <div class="select-all">
+                    <mat-checkbox  class="mat-option"
+                    [(ngModel)]="allSelected"
+                    [ngModelOptions]="{standalone: true}"
+                    (change)="toggleAllSelection()"
+                    >Select All
+                    </mat-checkbox>
+                </div>
+                <mat-option (click)="optionClick(list)" *ngFor="let list of eventTypeList" [value]="list">
+                  {{list}}
+                </mat-option>
+              </mat-select> -->
+
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-3">
+              <label> {{"RIPORT.VISITOR_NAME" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput placeholder="Visitor Name"  appInputRestriction
+               
+                maxlength="50" [formControl]="searchFilterForm.controls['visitorName']" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <label> {{"RIPORT.PHONE" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput placeholder="Phone" maxlength="20" onlyNumbers appInputRestriction
+                [formControl]="searchFilterForm.controls['phoneNo']" (paste)="$event.preventDefault()"
+                onkeypress="return String.fromCharCode(event.charCode).match(/[^0-9]/g) === null"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <label> {{"RIPORT.ID_NUMBER" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput placeholder="ID Number"  maxlength="4" appInputRestriction
+                [formControl]="searchFilterForm.controls['idNumber']" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <label> {{"RIPORT.OVERRIDDEN_BY" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput placeholder="Overridden By"  maxlength="100" appInputRestriction
+                [formControl]="searchFilterForm.controls['overriddenBy']" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-3">
+              <label> {{"RIPORT.BUILDING" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput placeholder="Building"   maxlength="100" appInputRestriction
+                [formControl]="searchFilterForm.controls['building']" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="add">
+              <label> {{"RIPORT.SELF_DECLARATION" | translate }} </label><br><br>
+              <!-- <button type="button" mat-flat-button class="add-mult-btn add-color" (click)="add()">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">add</mat-icon>
+              </button> -->
+            </div>
+          </div>
+
+          <div class="row" *ngFor="let item of t.controls; let outerIndex = index">
+            <div [formGroup]="item" class="row">
+              <div class="col-md-3">
+                <div class="form-group position-input">
+                  <label class="control-label">* {{ 'Select Question'}}</label>
+                  <mat-form-field appearance="outline" class="w-100">
+                    <!-- <mat-select placeholder="Select Question" formControlName="question">
+                      <button class="btn" *ngFor="let declar of declarationsData; let selectedIndex=index"
+                        [disabled]="declar?.isSelected" (click)="onSelect(declar,selectedIndex,outerIndex,item)">
+                        <mat-option [value]="declar?.question">
+                          {{declar?.question}}
+                        </mat-option>
+                      </button>
+                    </mat-select> -->
+                    <mat-select placeholder="Select Question" formControlName="question">
+                      <button class="btn" *ngFor="let declar of declarationsData; let selectedIndex=index"
+                         (click)="onSelect(declar,selectedIndex,outerIndex,item)">
+                        <mat-option [value]="declar?.question">
+                          {{declar?.question}}
+                        </mat-option>
+                      </button>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group position-input">
+                  <label class="control-label">* {{ 'Select Answer' }}</label>
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-select placeholder="Select Answer" formControlName="passCriteria">
+                      <mat-option *ngFor="let item of passCriteriaData" [value]="item?.passCriteria">{{item?.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+
+    </form>
+    <div class="exp-footer exp-footer-bg">
+      <div></div>
+      <div class="d-flex justify-content-end align-items-end">
+        <!-- <button mat-flat-button class="btn-refresh w-button" (click)="clearForm()">
+          Refresh
+        </button> -->
+        <button type="submit" mat-flat-button class="btn-black"
+         [disabled]="!searchFilterForm.dirty" (click)="filterSearch($event)">
+          {{"COMMON.SUBMIT" | translate }} 
+        </button>
+        <button  type="button" mat-flat-button class="btn-refresh w-button" (click)="reset()">Reset</button>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+
+  <!-- <p align="right">
+    <button type="button" [routerLink]="['addCheckInReport']" class="btn btn-secondary">+ Add</button>
+  </p> -->
+  <mat-expansion-panel [expanded]="1" (opened)="setStep(0)" (closed)="panelOpenState = false" hideToggle>
+    <mat-expansion-panel-header #panelH (click)="panelH._toggle()">
+      <mat-panel-title class="d-flex justify-content-between align-items-center">
+        <h5>{{"RIPORT.VISITOR_ACCESS_LOG_TABLE" | translate }}</h5>
+
+        <div class="head-icons">
+          <a (click)="DownloadExcel()" matTooltip="Excel download"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+        </div>
+      </mat-panel-title>
+      <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState" (click)="panelH._toggle()">expand_more
+      </mat-icon>
+      <mat-icon matTooltip="expand_less" *ngIf="panelOpenState" (click)="panelH._toggle()">expand_less
+      </mat-icon>
+    </mat-expansion-panel-header>
+    <section>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">{{"RIPORT.TH_NO" | translate }}</th>
+              <th scope="col">{{"RIPORT.TH_VISITOR_NAME" | translate }} <i (click)="sortData('VisitorName')" class="fa fa-sort"
+                  aria-hidden="true"></i>
+              </th>
+              <th scope="col">{{"RIPORT.TH_ID_PHOT_NAME" | translate }} <i (click)="sortData('IdPhotoImage')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{"RIPORT.TH_VISTOR_IMAGE" | translate }} <i (click)="sortData('VisitorImage')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th  scope="col">{{"RIPORT.TH_ID_NUMBER" | translate }} <i (click)="sortData('IdNumber')" class="fa fa-sort"
+                  aria-hidden="true"></i>
+              </th>
+              <!-- <th scope="col">{{"RIPORT.TH_KIOSK_NUMBER" | translate }}</th> -->
+              <th scope="col">Kiosk Name <i (click)="sortData('KioskName')" class="fa fa-sort" aria-hidden="true"></i>
+              </th>
+              <th scope="col">{{"RIPORT.TH_KIOSK_BUILDING" | translate }} <i (click)="sortData('KioskBuilding')"
+                  class="fa fa-sort" aria-hidden="true"></i>
+              </th>
+              <th scope="col">{{"RIPORT.TH_EVENT" | translate }} <i (click)="sortData('Event')" class="fa fa-sort"
+                  aria-hidden="true"></i>
+              </th>
+              <th scope="col">{{"RIPORT.TH_EVENT_TIME" | translate }} <i (click)="sortData('EventTime')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{"RIPORT.TH_COMPANY_NAME" | translate }} <i (click)="sortData('CompanyName')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{"RIPORT.TH_PHONE" | translate }} <i (click)="sortData('Phone')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{"RIPORT.TH_OVERRIDEN_BY" | translate }} <i (click)="sortData('OverriddenBy')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{"RIPORT.TH_SELF" | translate }} <i (click)="sortData('Self')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="visitorAccessList">
+            <tr *ngFor="let visitorAccess of visitorAccessList
+                  | orderBy: key: !reverse ; let i = index">
+              <td>{{columnNumberPrefix + i+1}}</td>
+              <td>{{(visitorAccess?.visitorName) ? (visitorAccess?.visitorName) : 'N.A'}}</td>
+              <td><img [src]="visitorAccess.imagesid" class="image" />
+              <td><img [src]="visitorAccess.visitorimages" alt="" class="image"></td>
+              <td>{{(visitorAccess?.idNumber) ? (visitorAccess?.idNumber) : 'N.A'}}</td>
+              <td>{{(visitorAccess?.kioskName) ? (visitorAccess?.kioskName) : 'N.A'}}</td>
+              <td>{{(visitorAccess?.kioskBuilding) ? (visitorAccess?.kioskBuilding) : 'N.A'}}</td>
+              <td>{{(visitorAccess?.event) ? (visitorAccess?.event) : 'N.A'}}</td>
+              <td>{{visitorAccess?.eventTime | date:'medium'}}</td>
+              <td>{{(visitorAccess?.companyName) ? (visitorAccess?.companyName) : 'N.A'}}</td>
+              <td>{{(visitorAccess?.phone) ? (visitorAccess?.phone) : 'N.A'}}</td>
+              <td>{{(visitorAccess?.overriddenBy) ? (visitorAccess?.overriddenBy) : 'N.A'}}</td>
+              <td>{{visitorAccess?.self? 'Yes':'No'}}</td>
+              <td>
+                <div>
+                  <button type="button" mat-raised-button [disabled]="visitorAccess?.isBlockListed || visitorAccess?.idNumber ==null || visitorAccess?.idNumber ==undefined"
+                  [routerLink]="['editCheckInReport', visitorAccess?.id]">
+                    Blacklist Visitor
+                  </button>
+                </div>
+
+              </td>
+
+              <!-- <td class="text-center">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                  <button mat-menu-item [routerLink]="['editCheckInReport', visitorAccess?.id]">
+                    <span>
+                      <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color"
+                        aria-hidden="true" data-mat-icon-type="font">edit</mat-icon>
+                      Edit
+                    </span>
+                  </button>
+                  <button mat-menu-item>
+                    <span (click)="onDelete(visitorAccess)">
+                      <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color"
+                        aria-hidden="true" data-mat-icon-type="font">delete</mat-icon>
+                      Delete
+                    </span>
+                  </button>
+                  <button mat-menu-item
+                  [disabled]="visitorAccess?.isBlockListed"
+                  [routerLink]="['editCheckInReport', visitorAccess?.id]">
+                    <span>
+                      <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color"
+                        aria-hidden="true" data-mat-icon-type="font">add</mat-icon>
+                      Blacklist Visitor
+                    </span>
+                  </button>
+                    <button mat-menu-item [disabled]="visitorAccess?.isBlockListed"
+                    (click)="onBlackList(visitorAccess?.id)">
+                    <span>
+                      <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color"
+                        aria-hidden="true" data-mat-icon-type="font">add</mat-icon>
+                      Blacklist Visitor
+                    </span>
+                  </button>
+                </mat-menu>
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <ng-container *ngIf="visitorAccessList.length">
+      <pagination [paginationList]="pagination" [selectedPageLimit]="currentPageLimit" [currentPage]="currentPage"
+        (onPageChange)="getPage($event)" [from]="columnNumberPrefix+1" [lastPage]="lastpage"
+        [to]="visitorAccessList?.length+columnNumberPrefix" [recordCount]="recordCount">
+      </pagination>
+
+      
+
+      
+    </ng-container>
+    <ng-container *ngIf="!visitorAccessList.length">
+      <p>{{'PAGINATIONTEXT.NOTFOUND' | translate}} </p>
+    </ng-container>
+  </mat-expansion-panel>
+  <loading *ngIf="isLoader"></loading>
+</div>

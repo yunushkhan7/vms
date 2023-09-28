@@ -1,0 +1,279 @@
+<div class="main-page">
+  <div class="bread-crumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a routerLink="/logs">{{"LOGSS.LOGS" | translate }}</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="main-div">
+
+    <!-- <mat-expansion-panel (opened)="setStep2(0)" (closed)="panelOpenState2 = false" hideToggle>
+      <mat-expansion-panel-header #panelH2 (click)="panelH2._toggle()">
+        <mat-panel-title class="d-flex justify-content-between align-items-center">
+          <h5>Download Internal Logs</h5>
+        </mat-panel-title>
+        <button type="submit" mat-flat-button class="btn-black"
+          (click)="DownloadExcel()">
+         Download Excel
+       </button>
+        <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState2" (click)="panelH2._toggle()">expand_more
+        </mat-icon>
+        <mat-icon matTooltip="expand_less" *ngIf="panelOpenState2" (click)="panelH2._toggle()">expand_less
+        </mat-icon>
+      </mat-expansion-panel-header>
+      <form [formGroup]="FilterForm">
+        <section>
+          <div class="form-group">
+            <div class="row mt-3">
+              <div class="col-md-6 date-icon-left">
+                <label> <em>*</em> {{"LOGSS.DATE" | translate }}</label>
+                <div class="class">
+
+                  <mat-form-field appearance="outline" class="w-100">
+                    
+                    <input matInput [ngxMatDatetimePicker]="picker2" 
+                    [formControl]="FilterForm.controls['internaldate']" 
+                    onkeydown="event.preventDefault()"
+                    appInputRestriction (paste)="$event.preventDefault()"
+                    onkeypress="return String.fromCharCode(event.charCode).match(/[^0-9]/g) === null"
+                    [placeholder]="currentDate | date:'medium' "
+                    [max]="maxDate"  (dateChange)="eDateChangedStart2($event)">
+                    <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker2"
+                  ></mat-datepicker-toggle>
+                  <ngx-mat-datetime-picker
+                    #picker2
+                    [showSpinners]="true"
+                    [showSeconds]="false"
+                    [enableMeridian]="true"
+                  >
+                    <ng-template>
+                      <span>OK</span>
+                    </ng-template>
+                  </ngx-mat-datetime-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </form>
+    </mat-expansion-panel> -->
+
+
+    <mat-expansion-panel [expanded]="1" (opened)="setStep1(0)" (closed)="panelOpenState1 = false" hideToggle>
+      <mat-expansion-panel-header #panelH1 (click)="panelH1._toggle()">
+        <mat-panel-title class="d-flex justify-content-between align-items-center">
+          <h5>{{"LOGSS.SEARCH_CON" | translate }}</h5>
+        </mat-panel-title>
+        <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState1" (click)="panelH1._toggle()">expand_more
+        </mat-icon>
+        <mat-icon matTooltip="expand_less" *ngIf="panelOpenState1" (click)="panelH1._toggle()">expand_less
+        </mat-icon>
+      </mat-expansion-panel-header>
+      <form [formGroup]="searchFilterForm">
+        <section>
+          <div class="form-group">
+            <div class="row mt-3">
+              <div class="col-md-6 date-icon-left">
+                <label> <em>*</em> {{"LOGSS.IN_START_DATE" | translate }}</label>
+                <div class="class">
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <input [formControl]="searchFilterForm.controls['startDate']" matInput [matDatepicker]="picker"
+                      [placeholder]="firstWeekDay">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field> -->
+
+                  <mat-form-field appearance="outline" class="w-100">
+                    <!-- <mat-label>{{ 'LOGS.DATE' | translate }}</mat-label> -->
+                    <input readonly matInput [ngxMatDatetimePicker]="picker" 
+                    [formControl]="searchFilterForm.controls['startDate']" 
+                    onkeydown="event.preventDefault()"
+                    appInputRestriction (paste)="$event.preventDefault()"
+                    onkeypress="return String.fromCharCode(event.charCode).match(/[^0-9]/g) === null"
+                    [placeholder]="currentDate | date:'medium' "
+                    [max]="maxDate"  (dateChange)="eDateChangedStart($event)">
+                    <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <ngx-mat-datetime-picker
+                    #picker
+                    [showSpinners]="true"
+                    [showSeconds]="false"
+                    [enableMeridian]="true"
+                  >
+                    <ng-template>
+                      <span>OK</span>
+                    </ng-template>
+                  </ngx-mat-datetime-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-6 date-icon-left">
+                <label> <em>*</em> {{"LOGSS.IN_END_DATE" | translate }}</label>
+                <div class="class">
+                  <!-- <mat-form-field appearance="outline" class="w-100">
+                    <input [formControl]="searchFilterForm.controls['endDate']" matInput [matDatepicker]="picker1"
+                      [placeholder]="lastWeekDay">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field> -->
+
+                  <mat-form-field appearance="outline" class="w-100">
+                    <!-- <mat-label>{{ 'LOGS.DATE' | translate }}</mat-label> -->
+                    <input readonly matInput [ngxMatDatetimePicker]="picker1" 
+                    [formControl]="searchFilterForm.controls['endDate']"
+                    onkeydown="event.preventDefault()"
+                    appInputRestriction (paste)="$event.preventDefault()"
+                    onkeypress="return String.fromCharCode(event.charCode).match(/[^0-9]/g) === null" 
+                    [min]="minDate" [placeholder]="lastDayOfMonth | date:'medium' "  [max]="maxDate">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker> -->
+                    <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker1"
+                  ></mat-datepicker-toggle>
+                  <ngx-mat-datetime-picker
+                    #picker1
+                    [showSpinners]="true"
+                    [showSeconds]="false"
+                    [enableMeridian]="true"
+                  >
+                    <ng-template>
+                      <span>OK</span>
+                    </ng-template>
+                  </ngx-mat-datetime-picker>
+                  </mat-form-field>
+
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <label> {{"LOGSS.TH_EVENT_TYPE" | translate }} </label>
+                <mat-form-field appearance="outline" class="w-100">
+                  <!-- <input [formControl]="searchFilterForm.controls['eventType']" 
+                  matInput placeholder="Event Type" /> -->
+
+                  <mat-select placeholder="Select Event Type" [formControl]="searchFilterForm.controls['eventType']">
+                    <mat-option *ngFor="let type of eventTypeList" [value]="type?.eventType"
+                      (click)="getFloorManagementList()">
+                      {{ type?.eventType }}
+                    </mat-option>
+                  </mat-select>
+
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <label> {{"LOGSS.IN_OWNER" | translate }} </label>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input [formControl]="searchFilterForm.controls['owner']" matInput  (keypress)="space($event)"
+                  placeholder="Owner" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+      </form>
+      <div class="exp-footer exp-footer-bg">
+        <div></div>
+        <div class="d-flex justify-content-end align-items-end">
+          <!-- <button mat-flat-button class="btn-refresh w-button" (click)="clearForm()">
+            Refresh
+          </button> -->
+          <button type="submit" mat-flat-button class="btn-blue" [disabled]="!searchFilterForm.dirty && !FilterForm.dirty" (click)="filterSearch($event)">
+            {{"LOGSS.SUBMIT" | translate }}
+          </button>
+          <button  type="button" mat-flat-button class="btn-refresh w-button" (click)="reset()">Reset</button>
+        </div>
+      </div>
+
+    </mat-expansion-panel>
+
+    <!-- <p align="right">
+    <button type="button"  [routerLink]="['addAccessLog']" class="btn btn-secondary">+ Add</button>
+  </p> -->
+
+    <mat-expansion-panel [expanded]="1" (opened)="setStep(0)" (closed)="panelOpenState = false" hideToggle>
+      <mat-expansion-panel-header #panelH (click)="panelH._toggle()">
+        <mat-panel-title class="d-flex justify-content-between align-items-center">
+          <h5>{{"LOGSS.LOG_LIST" | translate }}</h5>
+
+          <div class="head-icons">
+            <a (click)="DownloadExcel()" matTooltip="Excel download"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+          </div>
+        </mat-panel-title>
+        <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState" (click)="panelH._toggle()">expand_more
+        </mat-icon>
+        <mat-icon matTooltip="expand_less" *ngIf="panelOpenState" (click)="panelH._toggle()">expand_less
+        </mat-icon>
+      </mat-expansion-panel-header>
+      <section>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <th scope="col">{{"LOGSS.TH_NO" | translate }}</th>
+              <th scope="col">{{"LOGSS.TH_EVENT_TYPE" | translate }} <i (click)="sortData('EventType')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{"LOGSS.TH_OWNER" | translate }} <i (click)="sortData('Owner')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{"LOGSS.TH_MESSAGE" | translate }} <i (click)="sortData('Message')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{"LOGSS.TH_EVENT_TIME" | translate }} <i (click)="sortData('EventTime')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <!-- <th scope="col">Action</th> -->
+            </thead>
+
+            <tbody *ngIf="logsList">
+              <tr *ngFor="let log of logsList; let i=index">
+                <td>{{columnNumberPrefix + i+1}}</td>
+                <td>{{(log?.eventType) ? (log?.eventType) : 'N.A'}}</td>
+                <td>{{(log?.owner) ? (log?.owner) : 'N.A'}}</td>
+                <td>
+                  <div class="scroll-cl">
+                  {{(log?.message) ? (log?.message) : 'N.A'}}
+                </div></td>
+                <td>{{log?.eventTime | date:'medium'}}</td>
+                <!-- <td>
+                  <button class="btn btn-green text-success" >
+                    <mat-icon role="img" [routerLink]="['editAccessLog', log?.id]"
+                      class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true"
+                      data-mat-icon-type="font">edit</mat-icon>
+                  </button>
+                  <button  class="btn btn-red text-danger" (click)="onDelete(log)">
+                    <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color"
+                      aria-hidden="true" data-mat-icon-type="font">delete</mat-icon>
+                  </button>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+
+      <ng-container *ngIf="logsList?.length">
+        <pagination [paginationList]="pagination" [selectedPageLimit]="currentPageLimit" [currentPage]="currentPage"
+        (onPageChange)="getPage($event)"
+        [from]="columnNumberPrefix+1"
+        [to]="logsList?.length+columnNumberPrefix"
+        [recordCount]="recordCount"
+        [lastPage]="lastpage"
+        >
+      </pagination>
+      </ng-container>
+      <ng-container *ngIf="!logsList?.length">
+        <p>{{'PAGINATIONTEXT.NOTFOUND' | translate}} </p>
+      </ng-container>
+    </mat-expansion-panel>
+  </div>
+
+
+
+
+
+</div>

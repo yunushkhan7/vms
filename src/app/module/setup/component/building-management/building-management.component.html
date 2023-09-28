@@ -1,0 +1,117 @@
+<div class="main-page">
+
+  <div class="bread-crumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Setup"> {{"BUILDING_MANAG.SETUP" | translate }} </a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a routerLink="/building-management">
+            {{"BUILDING_MANAG.NAME" | translate }}</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <mat-expansion-panel [expanded]="1" (opened)="setStep1(0)" (closed)="panelOpenState1 = false" hideToggle>
+    <mat-expansion-panel-header #panelH1 (click)="panelH1._toggle()">
+      <mat-panel-title class="d-flex justify-content-between align-items-center">
+        <h5>{{"RIPORT.TITLE_FILTER" | translate }}</h5>
+      </mat-panel-title>
+      <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState1" (click)="panelH1._toggle()">expand_more
+      </mat-icon>
+      <mat-icon matTooltip="expand_less" *ngIf="panelOpenState1" (click)="panelH1._toggle()">expand_less
+      </mat-icon>
+    </mat-expansion-panel-header>
+
+    <form [formGroup]="searchFilterForm">
+      <section>
+        <div class="form-group">
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label> {{"BLACKLIST.SEARCH_FILTER.BUILDING_NAME" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput placeholder="Building Name" maxlength="50" appInputRestriction
+                [formControl]="searchFilterForm.controls['buildingName']" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+    </form>
+    <div class="exp-footer exp-footer-bg">
+      <div></div>
+      <div class="d-flex justify-content-end align-items-end">
+        <!-- <button mat-flat-button class="btn-refresh w-button" (click)="clearForm()">
+          Refresh
+        </button> -->
+        <button mat-flat-button class="btn-black" [disabled]="!searchFilterForm.dirty" (click)="filterSearch($event)">
+          {{"COMMON.SUBMIT" | translate }} 
+        </button>
+        <button  type="button" mat-flat-button class="btn-refresh w-button" (click)="reset()">Reset</button>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <!-- <p align="right">
+    <button type="button" [routerLink]="['addBuilding']" class="btn btn-secondary">{{'COMMON.BUTTON' |
+      translate}}</button>
+  </p> -->
+  <mat-expansion-panel [expanded]="1" (opened)="setStep(0)" (closed)="panelOpenState = false" hideToggle
+    (click)="$event.stopPropagation()">
+    <mat-expansion-panel-header #panelH (click)="panelH._toggle()">
+      <mat-panel-title class="d-flex justify-content-between align-items-center">
+        <h5>{{"BUILDING_MANAG.BUILDING_LIST" | translate }}</h5>
+
+        <div class="head-icons">
+          <a [routerLink]="['add']" matTooltip="Add Building"><i class="fa fa-plus" aria-hidden="true"></i></a>        </div>
+      </mat-panel-title>
+      <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState" (click)="panelH._toggle()">expand_more
+      </mat-icon>
+      <mat-icon matTooltip="expand_less" *ngIf="panelOpenState" (click)="panelH._toggle()">expand_less
+      </mat-icon>
+    </mat-expansion-panel-header>
+    <section>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">{{"BUILDING_MANAG.TH_NO" | translate }}</th>
+              <th class="text-center" scope="col">{{"BUILDING_MANAG.TH_BUILDING_NAME" | translate }} <i (click)="sortData('BuildingName')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="buildNameList">
+            <tr *ngFor="let building of buildNameList; let i=index">
+              <td>{{columnNumberPrefix + i+1}}</td>
+              <td  class="text-center sentesecase">{{(building?.buildingName) ? (building?.buildingName) : 'N.A'}}</td>
+              <td>
+                <button class="btn btn-green text-success">
+                  <mat-icon matTooltip="Edit" role="img" [routerLink]="['edit', building?.id]"
+                    class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true"
+                    data-mat-icon-type="font">edit</mat-icon>
+                </button>
+                <button class="btn btn-red text-danger" (click)="onDelete(building)">
+                  <mat-icon matTooltip="Delete" role="img" class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true"
+                    data-mat-icon-type="font">delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <ng-container *ngIf="buildNameList.length">
+      <pagination [paginationList]="pagination" [selectedPageLimit]="currentPageLimit" [currentPage]="currentPage"
+      (onPageChange)="getPage($event)"
+      [from]="columnNumberPrefix+1"
+        [to]="buildNameList.length+columnNumberPrefix"
+        [recordCount]="recordCount" [lastPage]="lastpage"
+      >
+    </pagination>
+    </ng-container>
+    <ng-container *ngIf="!buildNameList.length">
+      <p>{{'PAGINATIONTEXT.NOTFOUND' | translate}} </p>
+    </ng-container>
+  </mat-expansion-panel>
+
+</div>

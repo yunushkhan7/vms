@@ -1,0 +1,146 @@
+<div class="main-page">
+
+  <div class="bread-crumb">
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Logs</a></li>
+          </ol>
+      </nav>
+  </div>
+
+
+
+  <mat-expansion-panel [expanded]="1" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+          <mat-panel-title class="d-flex justify-content-between align-items-center">
+            <h5>Search Condition</h5>
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+      <section>
+        <form>
+          <div class="form-group">
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <label> <em>*</em> Start Date</label>
+                <div class="class">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput [matDatepicker]="picker" placeholder="Sunday, May 1, 2022">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label> <em>*</em> End Date</label>
+                <div class="class">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput [matDatepicker]="picker1" placeholder="Sunday, May 1, 2022">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-12">
+                <label> Event </label>
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select placeholder="Please Select">
+                    <mat-option value="one">Marriage</mat-option>
+                    <mat-option value="two">Office Meeting</mat-option>
+                    <mat-option value="one">Politics Meeting</mat-option>
+                    <mat-option value="two">Family Gathering</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <div class="exp-footer exp-footer-bg">
+        <div></div>
+          <div class="d-flex justify-content-end align-items-end">
+              <button mat-flat-button class="btn-blue">Submit</button>
+              <button mat-button>Reset</button>
+          </div>
+      </div>
+
+  </mat-expansion-panel>
+
+
+
+
+
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title class="d-flex justify-content-between align-items-center">
+          <h5>Log List</h5>
+
+            <div class="head-icons">
+              <a href="#"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+            </div>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <section>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Event Type</th>
+                      <th scope="col">Owner</th>
+                      <th scope="col">Message</th>
+                      <th scope="col">Event Time</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="frsmLogsList">
+                  <tr *ngFor="let frsmLog of frsmLogsList; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{frsmLog?.eventType}}</td>
+                    <td>{{frsmLog?.owner}}</td>
+                    <td>{{frsmLog?.message}}</td>
+                    <td>{{frsmLog?.eventTime}}</td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="exp-footer mb-16-px-2em">
+            <div class="col-auto my-1 shwo-text">
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Show </label>
+                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+                <label class="mr-sm-2" for="inlineFormCustomSelect"> Showing 1 to 10 of 24 entries </label>
+
+            </div>
+
+            <div class="pagination pagination-sm">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">2 <span class="sr-only"></span></a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+    </div>
+
+</mat-expansion-panel>
+
+
+</div>
+

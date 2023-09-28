@@ -1,0 +1,111 @@
+.pagination-foo {
+  border-top: 1.94444px solid var(--color-border);
+  padding: 20px;
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+    }
+
+  .pagin-sel {
+    & label {
+      color: var(--black);
+    }
+    ::ng-deep .select {
+      background: transparent;
+      border-radius: 3px;
+      padding: 2px;
+      margin-left: 6px;
+      border: 1px solid var(--color-gray);
+      font-size: 12px;
+    }
+  }
+
+  & nav {
+    @media (max-width: 767px) {
+    overflow-y: scroll;
+    width: 100%;
+    margin-top: 11px;
+    }
+    & ul {
+      align-items: center;
+      & li {
+        .page-link{
+          color: var(--btn-blue-color);
+          border: 1px solid #dee2e6 !important;
+          background-color: #fff0;
+          font-size: 12px;
+          min-height: 33px;
+          .material-icons{
+            font-size: 12px;
+          }
+        }
+        .active {
+          // width: 31px;
+          // height: 31px;
+          background-color: var(--btn-blue-color);
+          color: var(--white);
+          // border-radius: 50px;
+          // margin-right: 3px;
+        }
+      }
+    }
+  }
+}
+
+// .pagination-foo {
+//     border-top: 1.94444px solid var(--color-border);
+//     padding-top: 20px;
+//     ::ng-deep pagination {
+//       & label {
+//         color: var(--black);
+//       }
+//       ::ng-deep .select {
+//         border: none;
+//         background: var(--color-light-gray);
+//         border-radius: 5px;
+//         padding: 5px;
+//         margin-left: 5px;
+//       }
+
+//       & nav {
+//         & ul {
+//           align-items: center;
+//           & li {
+//             .active {
+//               width: 31px;
+//               height: 31px;
+//               background-color: var(--color-primary);
+//               color: var(--white);
+//               border-radius: 50px;
+//               margin-right: 3px;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+
+a:hover {
+  cursor: pointer;
+}
+.disabled {
+  cursor: not-allowed;
+}
+
+
+
+.pagination-label{
+  top: -47px;
+  left: 109px;
+  position: relative;
+
+@media screen and (max-width: 767px) {
+    top: -6px;
+    position: relative;
+    left: 4px;
+}
+}

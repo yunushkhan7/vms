@@ -1,0 +1,164 @@
+<div class="main-page">
+
+  <div class="bread-crumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Setup"> {{"ACCOUNT.SETUP" | translate }} </a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a routerLink="/sell">{{"ACCOUNT.ACCOUNT_TOP" | translate
+            }}</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <mat-expansion-panel [expanded]="1" (opened)="setStep1(0)" (closed)="panelOpenState1 = false" hideToggle>
+    <mat-expansion-panel-header #panelH1 (click)="panelH1._toggle()">
+      <mat-panel-title class="d-flex justify-content-between align-items-center">
+        <h5>{{"RIPORT.TITLE_FILTER" | translate }}</h5>
+      </mat-panel-title>
+      <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState1" (click)="panelH1._toggle()">expand_more
+      </mat-icon>
+      <mat-icon matTooltip="expand_less" *ngIf="panelOpenState1" (click)="panelH1._toggle()">expand_less
+      </mat-icon>
+    </mat-expansion-panel-header>
+
+    <form [formGroup]="searchFilterForm">
+      <section>
+        <div class="form-group">
+          <div class="row mt-3">
+            <div class="col-md-4">
+              <label> {{"ACCOUNT.TH_USER_NAME" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput placeholder="User Name" appInputRestriction
+                [formControl]="searchFilterForm.controls['userName']" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <label> {{"ACCOUNT.TH_ROLES" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput placeholder="Roles" appInputRestriction
+                 [formControl]="searchFilterForm.controls['role']" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <label> {{"ACCOUNT.TH_EMAIL" | translate }} </label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput placeholder="Email" (keypress)="space($event)"
+                 [formControl]="searchFilterForm.controls['email']" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+    </form>
+    <div class="exp-footer exp-footer-bg">
+      <div></div>
+      <div class="d-flex justify-content-end align-items-end">
+        <!-- <button mat-flat-button class="btn-refresh w-button" (click)="clearForm()">
+          Refresh
+        </button> -->
+
+        <button mat-flat-button class="btn-black" [disabled]="!searchFilterForm.dirty" (click)="filterSearch($event)">
+          {{"COMMON.SUBMIT" | translate }} 
+        </button>
+        <button  type="button" mat-flat-button class="btn-refresh w-button" (click)="reset()">Reset</button>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <!-- <p align="right">
+    <button type="button" [routerLink]="['addAccount']" class="btn btn-secondary">
+      + Add
+    </button>
+  </p> -->
+  <mat-expansion-panel [expanded]="1" (opened)="setStep(0)" (closed)="panelOpenState = false" hideToggle>
+    <mat-expansion-panel-header #panelH (click)="panelH._toggle()">
+      <mat-panel-title class="d-flex justify-content-between align-items-center">
+        <h5>{{"ACCOUNT.ACCOUNT_LIST" | translate }}</h5>
+
+        <div class="head-icons">
+          <!-- <a><i class="fa fa-building-o" aria-hidden="true"></i></a> -->
+          <!-- <a href="#"><i class="fa fa-pencil icon-color" aria-hidden="true"></i></a>
+          <a href="#"><i class="fa fa-trash icon-color" aria-hidden="true"></i></a>
+          <span class="icon-color"> | </span>-->
+          <a [routerLink]="['addAccount']" matTooltip="Add Account"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        </div>
+      </mat-panel-title>
+      <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState" (click)="panelH._toggle()">expand_more
+      </mat-icon>
+      <mat-icon matTooltip="expand_less" *ngIf="panelOpenState" (click)="panelH._toggle()">expand_less
+      </mat-icon>
+    </mat-expansion-panel-header>
+    <section>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">{{"ACCOUNT.TH_NO" | translate }}</th>
+              <th scope="col">{{"ACCOUNT.TH_USER_NAME" | translate }} <i (click)="sortData('UserName')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{"ACCOUNT.TH_ROLES" | translate }} <i (click)="sortData('RoleName')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <!-- <th scope="col">{{"ACCOUNT.TH_FLOOR" | translate }} <i (click)="sortData('userName')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{"ACCOUNT.TH_COMPANY" | translate }} <i (click)="sortData('userName')" class="fa fa-sort" aria-hidden="true"></i></th> -->
+              <th scope="col">{{"ACCOUNT.TH_EMAIL" | translate }} <i (click)="sortData('EmailId')" class="fa fa-sort" aria-hidden="true"></i></th>
+              <th scope="col">{{"ACCOUNT.TH_CATION" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="accounttList">
+            <tr *ngFor="let account of accounttList; let i=index">
+              <td>{{columnNumberPrefix + i+1}}</td>
+              <!-- <td>{{account?.sNo}}</td> -->
+              <td><div class="scroll-cl">{{(account?.userName) ? (account?.userName) : 'N.A'}}</div></td>              
+              <td>{{(account?.roleName) ? (account?.roleName) : 'N.A'}}</td>
+              <!-- <td></td>
+              <td></td> -->
+              <td>{{(account?.emailId) ? (account?.emailId) : 'N.A'}}</td>
+              <td>
+                <button *ngIf="currentUser?.id != account?.id" mat-icon-button [matMenuTriggerFor]="menu"
+                  aria-label="Example icon-button with a menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                  <button mat-menu-item [routerLink]="['editAccount', account?.id]">
+                    <span>
+                      <button class="btn btn-green text-success">
+                        <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color"
+                          aria-hidden="true" data-mat-icon-type="font">edit</mat-icon>
+                      </button>
+                      Edit
+                    </span>
+                  </button>
+                  <button mat-menu-item (click)="onDelete(account)">
+                    <span>
+                      <button class="btn btn-red text-danger">
+                        <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color"
+                          aria-hidden="true" data-mat-icon-type="font">delete</mat-icon>
+                      </button>
+                      Delete
+                    </span>
+                  </button>
+                </mat-menu>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <ng-container *ngIf="accounttList?.length">
+      <pagination [paginationList]="pagination" [selectedPageLimit]="currentPageLimit" [currentPage]="currentPage"
+        (onPageChange)="getPage($event)"
+        [from]="columnNumberPrefix+1"
+        [to]="accounttList.length+columnNumberPrefix"
+        [recordCount]="recordCount"
+        [lastPage]="lastpage"
+        >
+      </pagination>
+    </ng-container>
+    <ng-container *ngIf="!accounttList.length">
+      <p>{{'PAGINATIONTEXT.NOTFOUND' | translate}} </p>
+    </ng-container>
+  </mat-expansion-panel>
+
+</div>

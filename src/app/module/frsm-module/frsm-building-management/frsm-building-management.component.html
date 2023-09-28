@@ -1,0 +1,80 @@
+<div class="main-page">
+
+  <div class="bread-crumb">
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+              <!-- <li class="breadcrumb-item"><a href="#">Client</a></li> -->
+              <li class="breadcrumb-item active" aria-current="page"><a href="#">Building Management</a></li>
+          </ol>
+      </nav>
+  </div>
+
+
+
+  <mat-expansion-panel [expanded]="1" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+          <mat-panel-title class="d-flex justify-content-between align-items-center">
+              <h5>Building List</h5>
+
+              <div class="head-icons">
+                   <a href="#"><i class="fa fa-file-text-o icon-color" aria-hidden="true"></i></a>
+                  <a href="#"><i class="fa fa-pencil icon-color" aria-hidden="true"></i></a>
+                  <a href="#"><i class="fa fa-trash icon-color" aria-hidden="true"></i></a>
+                  <span class="icon-color"> | </span>
+                  <a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+              </div>
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+      <section>
+          <div class="table-responsive">
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th scope="col">No.</th>
+                          <th scope="col">Building Name</th>
+                      </tr>
+                  </thead>
+                  <tbody *ngIf="buildNameList">
+                    <tr *ngFor="let building of buildNameList; let i=index">
+                      <td>{{i+1}}</td>
+                      <td>{{building?.buildingName}}</td>
+                  </tr>
+                  </tbody>
+              </table>
+          </div>
+      </section>
+
+      <div class="exp-footer mb-16-px-2em">
+              <div class="col-auto my-1 shwo-text">
+                  <label class="mr-sm-2" for="inlineFormCustomSelect">Show </label>
+                  <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                  </select>
+                  <label class="mr-sm-2" for="inlineFormCustomSelect"> Entries | Showing 1 to 10 of 24 entries </label>
+
+              </div>
+
+              <div class="pagination pagination-sm">
+                  <nav aria-label="...">
+                      <ul class="pagination">
+                          <li class="page-item disabled">
+                              <a class="page-link" href="#" tabindex="-1">Previous</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item active">
+                              <a class="page-link" href="#">2 <span class="sr-only"></span></a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                          <li class="page-item">
+                              <a class="page-link" href="#">Next</a>
+                          </li>
+                      </ul>
+                  </nav>
+              </div>
+      </div>
+
+  </mat-expansion-panel>
+
+</div>

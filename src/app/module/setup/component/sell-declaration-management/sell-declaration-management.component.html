@@ -1,0 +1,205 @@
+
+    <div class="main-page">
+
+      <div class="bread-crumb">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/Setup"> {{"BUILDING_MANAG.SETUP" | translate }} </a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a routerLink="/building-management">
+                {{"RIPORT.SELF_DECLARATION" | translate }}</a></li>
+          </ol>
+        </nav>
+      </div>
+
+
+
+
+      
+    
+
+      
+
+      <div class="main-div">
+
+
+
+        <mat-expansion-panel [expanded]="1" (opened)="setStep2(0)" (closed)="panelOpenState2 = false" hideToggle>
+          <mat-expansion-panel-header #panelH2 (click)="panelH2._toggle()">
+            <mat-panel-title class="d-flex justify-content-between align-items-center">
+              <h5>{{"RIPORT.SELF_DECLARATION" | translate }}</h5>
+            </mat-panel-title>
+            
+            <mat-icon matTooltip="expand_more" *ngIf="!panelOpenState2" (click)="panelH2._toggle()">expand_more
+            </mat-icon>
+            <mat-icon matTooltip="expand_less" *ngIf="panelOpenState2" (click)="panelH2._toggle()">expand_less
+            </mat-icon>
+          </mat-expansion-panel-header>
+          
+          <!-- <div class="d-flex justify-content-between">
+            <h3 class="form-hadding">
+              {{ isEditing ? "Update" : "Add" }}
+              {{ "COMMON.BREADCUM.HOTEL" | translate }}
+            </h3>
+          </div> -->
+          <!-- <div class="d-flex justify-content-between">
+            <h3 class="form-hadding font-size18">
+              {{ "COMMON.COMPANY_DETAILS" | translate }}
+            </h3>
+          </div> -->
+          <form [formGroup]="addForm" class="justify-content-between" (keydown.enter)="$event.preventDefault()">
+            
+           
+            
+  
+            
+  
+            <!-- visitorHours -->
+            <section formArrayName="questionary">
+
+              <!-- header-->
+              <div class="form-group w-100 input-fildcl">
+                <label class="control-label">Header</label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input (keydown)="space($event)"
+                      matInput maxlength="1500"
+                      [formControl]="addForm.controls['header']"
+                      placeholder="Header"
+                    />
+                  </mat-form-field>
+                  <mat-error *ngIf="submitted && addForm.controls['header'].errors">
+                    Header field is required
+                   </mat-error>
+                </div>
+              </div>
+
+              <div class="row mt-2 mb-2">
+                <div class="col-md-12">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <label>Question</label>
+                    <button type="button" class="btn btn-secondary mr-b" [disabled]="!addForm.valid" 
+                    (click)="add(true)">
+                    <mat-icon matTooltip="Add Question" aria-hidden="false" aria-label="Example home icon"
+                    >add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+  
+              <div
+                class="row pt-2"
+                *ngFor="let item of t.controls; let i = index"
+              >
+                <div [formGroup]="item" class="row">
+                  <!-- enable-->
+                  <div class="col-md-2">
+                    <div class="form-group position-input">
+                      <label class="mb-2" for="exampleInputEmail1">Enable Question {{i+1}}</label><br />
+                      <mat-slide-toggle
+                        formControlName="enable"
+                      ></mat-slide-toggle>
+                      <!-- <mat-error *ngIf="submitted && item.controls['enable'].errors">
+                        enable field is required
+                       </mat-error> -->
+                    </div>
+                  </div>
+  
+                  <!-- question-->
+                  <div class="col-md-6">
+                    <label class="control-label">Question {{i+1}}</label>
+                    <mat-form-field appearance="outline" class="w-100">
+                      <input
+                        matInput (keydown)="space($event)"
+                        formControlName="question"
+                        placeholder="Question"
+                        maxlength="300"
+                      />
+                    </mat-form-field>
+                    <!-- <mat-error *ngIf="submitted && item.controls['question'].errors">
+                      Question Field is Required
+                     </mat-error> -->
+                     <!-- <mat-error *ngIf="submitted && item.get('question').hasError('required')">
+                      Question Field is Required
+                    </mat-error> -->
+                  </div>
+  
+                  <!--passCriteria -->
+                  <div class="col-md-3">
+                    <div class="form-group position-input">
+                      <label class="mb-2" for="exampleInputEmail1">Pass Criteria Question {{i+1}}</label><br />
+                      <!-- <mat-slide-toggle
+                        formControlName="passCriteria"
+                      ></mat-slide-toggle> -->
+                      <mat-radio-group formControlName="passCriteria">
+                        <mat-radio-button value="Yes">Yes</mat-radio-button>
+                        &nbsp;
+                        <mat-radio-button value="No">No</mat-radio-button>
+                      </mat-radio-group>
+                      <!-- <mat-error *ngIf="submitted && item.controls['passCriteria'].errors">
+                        Pass Criteria Question field is Required
+                       </mat-error> -->
+                    </div>
+                  </div>
+  
+                  <!-- delete -->
+                  <div class="col-md-1">
+                    <div class="form-group closetext-right">
+                      <label class="delete-tex" for="inputState">{{
+                        "KIOSK.EDIT_DELETE" | translate
+                      }}</label
+                      ><br />
+                      <!-- <button
+                        mat-flat-button
+                        class="add-mult-btn mult-color btn-trans"
+                        
+                      >
+
+                      </button> -->
+                      <mat-icon
+                      class="add-mult-btn mult-color btn-trans"
+                      (click)="onDelete(i)"
+                      aria-hidden="false"
+                      aria-label="Example home icon"
+                      >delete</mat-icon
+                    >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+               <!--footer-->
+            <div class="form-group w-100 input-fildcl">
+              <label class="control-label">Footer</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input
+                    matInput maxlength="1500" (keydown)="space($event)"
+                    [formControl]="addForm.controls['footer']"
+                    placeholder="Footer"
+                  />
+                </mat-form-field>
+                <mat-error *ngIf="submitted && addForm.controls['footer'].errors">
+                  Footer Field is Required
+                 </mat-error>
+              </div>
+            </div>
+            
+            </section>
+          
+           
+            <div class="exp-footer exp-footer-bg">
+              <div></div>
+            <div class="d-flex justify-content-end">
+              <!-- <button type="button" mat-raised-button (click)="back()">
+                Cancel
+              </button> -->
+              <button type="submit" [disabled]="!addForm.dirty" mat-flat-button class="btn-blue" (click)="submitForm()">{{"COMMON.SUBMIT" | translate }}</button>
+             
+            </div>
+            </div>
+          </form>
+
+        </mat-expansion-panel>        
+        
+      </div>
+    </div>
